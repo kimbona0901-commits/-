@@ -1,0 +1,1573 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>인사말 | 대한청각학회</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700;800;900&family=Poppins:wght@500;600;700;800&display=swap" rel="stylesheet">
+
+  <style>
+    /* ===== FONTS ===== */
+    @font-face {
+      font-family: 'Paperozi';
+      src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/2408-3@1.0/Paperlogy-4Regular.woff2') format('woff2');
+      font-weight: 400;
+      font-display: swap;
+    }
+
+    @font-face {
+      font-family: 'Paperozi';
+      src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/2408-3@1.0/Paperlogy-6SemiBold.woff2') format('woff2');
+      font-weight: 600;
+      font-display: swap;
+    }
+
+    @font-face {
+      font-family: 'Paperozi';
+      src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/2408-3@1.0/Paperlogy-7Bold.woff2') format('woff2');
+      font-weight: 700;
+      font-display: swap;
+    }
+
+    /* ===== RESET & VARIABLES ===== */
+    :root {
+      --navy-deep: #070b1f;
+      --navy: #0e1a3d;
+      --blue-nav: #00468e;
+      --blue-hover: #336ba5;
+      --blue-bright: #3b7ce0;
+      --ink: #1a2233;
+      --ink-soft: #5b6472;
+      --line: #e6e9ee;
+      --white: #ffffff;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    /* 전역 스크롤바 숨김 처리 (기능은 유지) */
+    html,
+    body,
+    div,
+    section,
+    ul,
+    dialog {
+      -ms-overflow-style: none;
+      /* IE and Edge */
+      scrollbar-width: none;
+      /* Firefox */
+    }
+
+    html::-webkit-scrollbar,
+    body::-webkit-scrollbar,
+    div::-webkit-scrollbar,
+    section::-webkit-scrollbar,
+    ul::-webkit-scrollbar,
+    dialog::-webkit-scrollbar,
+    *::-webkit-scrollbar {
+      display: none !important;
+      /* Chrome, Safari, Opera */
+      width: 0 !important;
+      height: 0 !important;
+    }
+
+    body {
+      font-family: 'Paperozi', 'Noto Sans KR', sans-serif;
+      color: var(--ink);
+      background: var(--white);
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+      word-break: keep-all;
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    button {
+      font-family: inherit;
+      cursor: pointer;
+      border: none;
+      background: none;
+    }
+
+    ul {
+      list-style: none;
+    }
+
+    img {
+      display: block;
+      max-width: 100%;
+    }
+
+    .wrap {
+      max-width: 1300px;
+      margin: 0 auto;
+      padding: 0 32px;
+      width: 100%;
+    }
+
+    /* ===== TOP BAR ===== */
+    .topbar {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 94px;
+      padding: 0 32px;
+      max-width: 1300px;
+      margin: 0 auto;
+      gap: 16px;
+    }
+
+    .search-box {
+      display: flex;
+      align-items: center;
+      gap: 40px;
+      height: 44px;
+      background: #fff;
+      border: 1px solid #ddd;
+      border-radius: 500px;
+      padding: 8px 20px;
+      transition: border-color .2s, box-shadow .2s;
+      width: 260px;
+    }
+
+    .search-box:hover {
+      border-color: #bbb;
+    }
+
+    .search-box:focus-within {
+      border-color: #45a2ff;
+      box-shadow: 0 0 0 3px rgba(69, 162, 255, .15);
+    }
+
+    .search-box input {
+      border: none;
+      outline: none;
+      flex: 1;
+      min-width: 0;
+      font-size: 15px;
+      line-height: 22px;
+      font-family: inherit;
+      background: transparent;
+    }
+
+    .search-box input::placeholder {
+      color: #999;
+    }
+
+    .search-box button {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 20px;
+      height: 20px;
+      flex-shrink: 0;
+      transition: transform .2s, opacity .2s;
+    }
+
+    .search-box button:hover {
+      transform: scale(1.12);
+    }
+
+    .search-box button img {
+      width: 20px;
+      height: 20px;
+    }
+
+    .logo {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      display: flex;
+      align-items: center;
+      transition: opacity .2s;
+    }
+
+    .logo:hover {
+      opacity: .75;
+    }
+
+    /* 로고: 폭/높이를 고정하지 않고 원본 비율 그대로 표시 (최대 높이만 제한) */
+    .logo img {
+      width: auto;
+      height: auto;
+      max-height: 72px;
+      max-width: 100%;
+    }
+
+    .top-actions {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-left: auto;
+    }
+
+    .login-join {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      height: 44px;
+      background: #232e3e;
+      color: #fff;
+      border-radius: 500px;
+      padding: 8px 20px;
+      font-size: 15px;
+      line-height: 22px;
+      font-weight: 600;
+      white-space: nowrap;
+      transition: background .2s, transform .2s;
+    }
+
+    .login-join.join {
+      background: #3d4a5c;
+    }
+
+    .login-join:hover {
+      background: #35455a;
+      transform: translateY(-2px);
+    }
+
+    .login-join.join:hover {
+      background: #4f5e73;
+    }
+
+    .login-join img {
+      width: 20px;
+      height: 20px;
+    }
+
+    .pill {
+      display: flex;
+      align-items: center;
+      height: 44px;
+      padding: 8px 20px;
+      border-radius: 500px;
+      font-size: 15px;
+      line-height: 22px;
+      font-weight: 600;
+      background: #45a2ff;
+      color: #fff;
+      transition: background .2s, transform .2s;
+    }
+
+    .pill:hover {
+      background: #2b8bee;
+      transform: translateY(-2px);
+    }
+
+    .sns {
+      display: flex;
+      width: 44px;
+      height: 44px;
+      flex-shrink: 0;
+      transition: transform .25s, filter .25s;
+    }
+
+    .sns img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
+
+    .sns:hover {
+      transform: translateY(-3px) scale(1.06);
+      filter: drop-shadow(0 6px 12px rgba(0, 0, 0, .28));
+    }
+
+    /* ===== NAV ===== */
+    .navbar {
+      background: var(--blue-nav);
+      position: relative;
+      z-index: 40;
+    }
+
+    .navbar .wrap {
+      display: flex;
+      align-items: stretch;
+      justify-content: space-between;
+      padding: 0 32px;
+    }
+
+    .nav-menu {
+      display: flex;
+      flex: 1;
+      min-width: 0;
+      align-items: stretch;
+    }
+
+    .nav-menu>li {
+      position: relative;
+      display: flex;
+      flex: 1;
+      min-width: 0;
+      align-items: stretch;
+    }
+
+    .nav-menu>li>a {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex: 1;
+      height: 64px;
+      padding: 0 8px;
+      font-size: 17px;
+      line-height: 26px;
+      font-weight: 600;
+      color: #fff;
+      white-space: nowrap;
+      transition: background .25s;
+    }
+
+    .nav-menu li.active>a,
+    .nav-menu>li:hover>a {
+      background: var(--blue-hover);
+    }
+
+    .nav-menu .sub-dropdown {
+      position: absolute;
+      top: 100%;
+      left: 0;
+      width: 100%;
+      background: #ffffff;
+      border-top: 3px solid #00468e;
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.12);
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(10px);
+      transition: all 0.25s ease;
+      z-index: 50;
+      padding: 8px 0;
+      border-radius: 0 0 8px 8px;
+      text-align: center;
+    }
+
+    .nav-menu>li:hover .sub-dropdown {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0);
+    }
+
+    /* 2뎁스는 1뎁스(17px)보다 한 단계 작게 */
+    .nav-menu .sub-dropdown li a {
+      display: block;
+      padding: 9px 8px;
+      font-size: 15px;
+      line-height: 22px;
+      font-weight: 500;
+      color: #333;
+      word-break: keep-all;
+      transition: background 0.2s, color 0.2s;
+    }
+
+    .nav-menu .sub-dropdown li a:hover {
+      background: #eaf1fc;
+      color: #00468e;
+      font-weight: 600;
+    }
+
+    .nav-toggle {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 64px;
+      flex-shrink: 0;
+      background: #053669;
+      transition: background .2s;
+    }
+
+    .nav-toggle:hover {
+      background: #0a4a8c;
+    }
+
+    .nav-toggle img {
+      width: 40px;
+      height: 40px;
+    }
+
+    /* ===== 📋 GNB MEGA DROPDOWN ===== */
+    .gnb-dropdown {
+      position: absolute;
+      top: 100%;
+      left: 0;
+      right: 0;
+      background: #f8f9fa;
+      border-bottom: 2px solid #00468e;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.35s ease-in-out, opacity 0.3s;
+      opacity: 0;
+      z-index: 39;
+    }
+
+    .gnb-dropdown.open {
+      max-height: 420px;
+      opacity: 1;
+    }
+
+    /* 우측 96px = .wrap 좌우여백 32px + .nav-toggle 폭 64px
+       → 2뎁스 칼럼 영역이 1뎁스 메뉴 영역과 정확히 일치 */
+    .gnb-dropdown .wrap {
+      display: flex;
+      align-items: flex-start;
+      padding: 24px 96px 24px 32px;
+    }
+
+    .gnb-depth-col {
+      flex: 1;
+      min-width: 0;
+      border-right: 1px solid #e9ecef;
+      padding: 0 8px;
+      text-align: center;
+    }
+
+    .gnb-depth-col:last-child {
+      border-right: none;
+    }
+
+    .gnb-depth-col ul li {
+      margin-bottom: 10px;
+    }
+
+    .gnb-depth-col ul li:last-child {
+      margin-bottom: 0;
+    }
+
+    /* 2뎁스는 1뎁스(17px)보다 한 단계 작게 */
+    .gnb-depth-col ul li a {
+      font-size: 15px;
+      line-height: 22px;
+      font-weight: 500;
+      color: #495057;
+      word-break: keep-all;
+      transition: color 0.2s, font-weight 0.2s;
+      display: block;
+    }
+
+    .gnb-depth-col ul li a:hover {
+      color: #0080ff;
+      font-weight: 700;
+    }
+
+    /* ===== DRAWER (모바일 사이드 슬라이드 메뉴) ===== */
+    .drawer {
+      margin: 0 0 0 auto;
+      width: min(320px, 85vw);
+      max-width: none;
+      height: 100%;
+      max-height: 100%;
+      padding: 0;
+      border: 0;
+      background: #173a72;
+      color: #fff;
+      transform: translateX(100%);
+      transition: transform .28s ease, overlay .28s allow-discrete, display .28s allow-discrete;
+      overflow-y: auto;
+    }
+
+    .drawer[open] {
+      transform: translateX(0);
+    }
+
+    @starting-style {
+      .drawer[open] {
+        transform: translateX(100%);
+      }
+    }
+
+    .drawer::backdrop {
+      background: rgba(6, 14, 32, .6);
+    }
+
+    .drawer-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 18px 20px;
+      border-bottom: 1px solid rgba(255, 255, 255, .12);
+    }
+
+    .drawer-head span {
+      font-family: 'Paperozi', sans-serif;
+      font-weight: 700;
+      font-size: 18px;
+      letter-spacing: .5px;
+    }
+
+    .drawer-close {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      color: #c3d3ec;
+      background: rgba(255, 255, 255, .08);
+      transition: color .2s, background .2s;
+    }
+
+    .drawer-close:hover {
+      color: #fff;
+      background: rgba(255, 255, 255, .18);
+    }
+
+    .drawer-menu {
+      display: block;
+      padding: 12px 0;
+    }
+
+    .drawer-menu>li {
+      display: block;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .drawer-menu .drawer-item-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 16px 20px;
+      cursor: pointer;
+    }
+
+    .drawer-menu .drawer-item-head a {
+      font-size: 17px;
+      font-weight: 700;
+      color: #fff;
+    }
+
+    .drawer-menu .drawer-toggle-btn {
+      color: #9aa3af;
+      font-size: 14px;
+      transition: transform 0.25s;
+    }
+
+    .drawer-menu>li.active .drawer-toggle-btn {
+      transform: rotate(180deg);
+      color: #fff;
+    }
+
+    .drawer-sub-menu {
+      max-height: 0;
+      overflow: hidden;
+      background: rgba(0, 0, 0, 0.2);
+      transition: max-height 0.3s ease, padding 0.3s ease;
+      padding: 0 20px;
+    }
+
+    .drawer-menu>li.active .drawer-sub-menu {
+      max-height: 500px;
+      padding: 10px 20px 16px 20px;
+    }
+
+    .drawer-sub-menu li a {
+      display: block;
+      padding: 8px 0;
+      font-size: 15px;
+      color: #c3d3ec;
+      transition: color 0.2s;
+    }
+
+    .drawer-sub-menu li a:hover {
+      color: #ffffff;
+      font-weight: 600;
+    }
+
+    /* ===== SUB HERO BANNER & BREADCRUMB ===== */
+    .sub-hero {
+      position: relative;
+      height: 220px;
+      background: url('img/sub_bg.png') center/cover no-repeat;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      color: #fff;
+      overflow: hidden;
+    }
+
+    .sub-hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      /* background: linear-gradient(90deg, rgba(0, 40, 90, 0.85) 0%, rgba(0, 70, 142, 0.4) 100%); */
+    }
+
+    .sub-hero .wrap {
+      position: relative;
+      z-index: 2;
+    }
+
+    .breadcrumb-top {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 14px;
+      color: #545454;
+      margin-bottom: 12px;
+    }
+
+    .breadcrumb-top svg {
+      fill: currentColor;
+    }
+
+    .sub-hero h1 {
+      font-size: 40px;
+      font-weight: 800;
+      letter-spacing: -0.5px;
+      color: #232E3E;
+    }
+
+    /* SUB NAV (LNM: Local Navigation Menu) */
+    .sub-nav-bar {
+      background: #002d5d;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .sub-nav-bar .wrap {
+      display: flex;
+      align-items: center;
+    }
+
+    .lnb-home {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 60px;
+      height: 52px;
+      border-right: 1px solid rgba(255, 255, 255, 0.15);
+      color: #fff;
+      transition: background .2s;
+    }
+
+    .lnb-home:hover {
+      background: rgba(255, 255, 255, 0.1);
+    }
+
+    .lnb-select-wrap {
+      position: relative;
+      display: flex;
+      align-items: center;
+      height: 52px;
+      border-right: 1px solid rgba(255, 255, 255, 0.15);
+      padding: 0 20px;
+      color: #fff;
+      font-size: 15px;
+      font-weight: 500;
+      cursor: pointer;
+      min-width: 180px;
+      justify-content: space-between;
+      transition: background .2s;
+    }
+
+    .lnb-select-wrap:hover {
+      background: rgba(255, 255, 255, 0.08);
+    }
+
+    .lnb-select-wrap svg {
+      transition: transform .25s;
+    }
+
+    .lnb-dropdown-menu {
+      position: absolute;
+      top: 100%;
+      left: 0;
+      right: 0;
+      background: #00224a;
+      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
+      display: none;
+      z-index: 50;
+    }
+
+    .lnb-select-wrap.open .lnb-dropdown-menu {
+      display: block;
+    }
+
+    .lnb-select-wrap.open svg {
+      transform: rotate(180deg);
+    }
+
+    .lnb-dropdown-menu li a {
+      display: block;
+      padding: 12px 20px;
+      font-size: 14px;
+      color: #cbd8ee;
+      transition: background .2s, color .2s;
+    }
+
+    .lnb-dropdown-menu li a:hover {
+      background: #00468e;
+      color: #fff;
+    }
+
+    /* ===== SUB CONTENT AREA ===== */
+    .sub-content-sec {
+      padding: 80px 0 120px;
+    }
+
+    .greeting-header h2 {
+      font-size: 34px;
+      font-weight: 800;
+      color: #111;
+      line-height: 1.35;
+      margin-bottom: 8px;
+    }
+
+    .greeting-header h2 span {
+      color: var(--blue-nav);
+    }
+
+    .greeting-header h3 {
+      font-size: 22px;
+      font-weight: 700;
+      color: #333;
+      margin-bottom: 20px;
+    }
+
+    .greeting-grid {
+      display: flex;
+      align-items: flex-start;
+      gap: 50px;
+    }
+
+    /* 인물 프로필 이미지 호버 인터랙션 */
+    .profile-card {
+      position: relative;
+      flex-shrink: 0;
+      width: 240px;
+      overflow: hidden;
+    }
+
+    .profile-card img {
+      width: 100%;
+      height: auto;
+      object-fit: cover;
+      transition: transform 0.5s ease;
+    }
+
+ 
+    /* 인사말 본문 텍스트 */
+    .greeting-body {
+      flex: 1;
+      font-size: 16px;
+      line-height: 1.8;
+      color: #444;
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+    }
+
+    .greeting-body p {
+      text-align: justify;
+    }
+
+    .greeting-sign {
+      margin-top: 32px;
+      text-align: right;
+      font-size: 18px;
+      color: #222;
+    }
+
+    .greeting-sign .date {
+      font-size: 16px;
+      color: #666;
+      margin-bottom: 8px;
+      font-weight: 500;
+    }
+
+    .greeting-sign .name {
+      font-size: 22px;
+      font-weight: 800;
+      color: #00468e;
+    }
+
+    .greeting-sign .name span {
+      font-size: 18px;
+      font-weight: 600;
+      color: #333;
+      margin-left: 6px;
+    }
+
+    /* ===== FOOTER ===== */
+    footer {
+      background: #fff;
+      border-top: 1px solid #ddd;
+      padding: 30px 0;
+    }
+
+    .foot-flex {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 34px;
+      flex-wrap: wrap;
+    }
+
+    .foot-brand {
+      display: flex;
+      align-items: flex-start;
+      gap: 40px;
+      flex: 1 1 420px;
+      min-width: 0;
+    }
+
+    .foot-brand img {
+      width: 220px;
+      max-width: 100%;
+      height: auto;
+      mix-blend-mode: multiply;
+      flex-shrink: 0;
+    }
+
+    .foot-info {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      flex: 1;
+      min-width: 0;
+    }
+
+    .foot-info p {
+      font-size: 15px;
+      font-weight: 400;
+      line-height: 24px;
+      color: #676767;
+      word-break: keep-all;
+      overflow-wrap: anywhere;
+    }
+
+    .foot-info .bar {
+      display: inline-block;
+      margin: 0 10px;
+      color: #c8c8c8;
+    }
+
+    .foot-info .nowrap {
+      white-space: nowrap;
+    }
+
+    .foot-info .copyright {
+      font-size: 13px;
+      line-height: 20px;
+      color: #999;
+    }
+
+    .foot-actions {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+      flex-shrink: 0;
+    }
+
+    .foot-btn {
+      padding: 6px 10px;
+      border-radius: 4px;
+      background: #676767;
+      font-size: 14px;
+      line-height: 20px;
+      font-weight: 200;
+      color: #fff;
+      white-space: nowrap;
+      transition: background .2s;
+    }
+
+    .foot-btn.strong {
+      background: #333;
+      font-weight: 400;
+    }
+
+    .foot-btn:hover {
+      background: #111;
+    }
+
+    /* ===== 📱 RESPONSIVE MEDIA QUERIES ===== */
+    @media (max-width: 1280px) {
+      .logo img {
+        max-height: 62px;
+      }
+    }
+
+    @media (max-width: 1024px) {
+      .greeting-grid {
+        flex-direction: column;
+        align-items: center;
+        gap: 36px;
+      }
+
+      .profile-card {
+        width: 280px;
+      }
+
+      .greeting-header h2 {
+        font-size: 28px;
+      }
+
+      .greeting-header h3 {
+        font-size: 19px;
+        margin-bottom: 32px;
+      }
+    }
+
+    @media (max-width: 1000px) {
+      .topbar {
+        height: auto;
+        padding: 16px 20px;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        gap: 12px;
+      }
+
+      .logo {
+        position: static;
+        transform: none;
+        order: -1;
+      }
+
+      .logo img {
+        max-height: 60px;
+      }
+
+      .search-box {
+        order: 2;
+        width: 100%;
+      }
+
+      .top-actions {
+        order: 0;
+        margin-left: auto;
+      }
+    }
+
+    @media (max-width: 860px) {
+      .nav-menu {
+        display: none;
+      }
+    }
+
+    @media (max-width: 760px) {
+      .logo img {
+        max-height: 36px;
+      }
+    }
+
+    @media (max-width: 640px) {
+
+      /* 모바일 화면 호버 인터랙션 무효화 (터치시 흔들림/튀는 현상 제거) */
+      .login-join:hover,
+      .pill:hover,
+      .sns:hover {
+        transform: none !important;
+        filter: none !important;
+        box-shadow: none !important;
+      }
+
+      /* 모바일 컨텐츠 좌우 여백 20px 지정 */
+      .wrap {
+        padding: 0 20px !important;
+      }
+
+      .topbar {
+        height: auto;
+        padding: 14px 20px !important;
+        flex-direction: row;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+      }
+
+      .navbar .wrap {
+        padding: 0 20px !important;
+        justify-content: space-between;
+        align-items: center;
+        height: 52px;
+      }
+
+      .logo {
+        position: static;
+        transform: none;
+        order: 0;
+        margin-bottom: 0;
+      }
+
+      .logo img {
+        max-height: 36px;
+      }
+
+      .top-actions {
+        display: flex !important;
+        order: 1;
+        gap: 6px;
+      }
+
+      .login-join {
+        height: 36px;
+        padding: 4px 12px;
+        font-size: 12px;
+      }
+
+      .login-join img {
+        width: 14px;
+        height: 14px;
+      }
+
+      .pill,
+      .sns {
+        display: none !important;
+      }
+
+      .search-box {
+        order: 2;
+        width: 100%;
+        height: 40px;
+        gap: 12px;
+        padding: 6px 16px;
+      }
+
+      .search-box input {
+        font-size: 13px;
+      }
+
+      .nav-menu {
+        display: none;
+      }
+
+      .nav-toggle {
+        margin-left: auto;
+        width: 44px;
+        height: 44px;
+        border-radius: 8px;
+        background: transparent;
+      }
+
+      .nav-toggle img {
+        width: 32px;
+        height: 32px;
+      }
+
+      .sub-hero {
+        height: 160px;
+      }
+
+      .sub-hero h1 {
+        font-size: 26px;
+      }
+
+      /* overflow-x: auto 를 쓰면 아래로 펼쳐지는 드롭다운이 잘려서 안 보인다.
+         가로 스크롤 대신 항목을 화면 폭에 맞춰 나눠 갖도록 변경 */
+      .sub-nav-bar {
+        overflow-x: visible;
+      }
+
+      .lnb-home {
+        width: 48px;
+        flex-shrink: 0;
+      }
+
+      .lnb-select-wrap {
+        flex: 1;
+        min-width: 0;
+        gap: 8px;
+        padding: 0 12px;
+        font-size: 13px;
+      }
+
+      /* 메뉴명이 길어지면 말줄임 (화살표는 항상 노출) */
+      .lnb-select-wrap>span {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+
+      .lnb-select-wrap>svg {
+        flex-shrink: 0;
+      }
+
+      .sub-content-sec {
+        padding: 40px 0 80px;
+      }
+
+      /* 모바일에서는 회장 사진을 절반 크기로 */
+      .profile-card {
+        width: 140px;
+      }
+
+      .greeting-header h2 {
+        font-size: 22px;
+      }
+
+      .greeting-header h3 {
+        font-size: 16px;
+        margin-bottom: 24px;
+      }
+
+      .greeting-body {
+        font-size: 14px;
+        line-height: 1.75;
+        gap: 16px;
+      }
+
+      .greeting-sign .date {
+        font-size: 14px;
+      }
+
+      .greeting-sign .name {
+        font-size: 18px;
+      }
+
+      footer {
+        padding: 24px 0;
+      }
+
+      .foot-flex {
+        flex-direction: column;
+        gap: 20px;
+        align-items: stretch;
+      }
+
+      /* 세로 배치에서는 flex-basis(420px)가 '높이'로 해석되어
+         빈 여백이 생기므로 flex 값을 해제 */
+      .foot-brand {
+        flex: none;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 16px;
+        width: 100%;
+      }
+
+      .foot-brand img {
+        width: 150px;
+        height: auto;
+      }
+
+      .foot-info {
+        flex: none;
+        width: 100%;
+        gap: 10px;
+      }
+
+      .foot-info p {
+        font-size: 13px;
+        line-height: 20px;
+        word-break: keep-all;
+      }
+
+      /* 좁은 화면에서는 연락처를 항목별로 한 줄씩 (구분선 숨김) */
+      .foot-info .nowrap {
+        display: block;
+      }
+
+      .foot-info .bar {
+        display: none;
+      }
+
+      .foot-info .copyright {
+        font-size: 11px;
+        line-height: 16px;
+        margin-top: 4px;
+      }
+
+      .foot-actions {
+        width: 100%;
+        justify-content: flex-start;
+        gap: 8px;
+        padding-top: 8px;
+        border-top: 1px solid var(--line);
+      }
+
+      .foot-btn {
+        font-size: 12px;
+        padding: 6px 12px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="topbar">
+    <form class="search-box" onsubmit="return false;">
+      <input type="text" placeholder="검색어를 입력하세요.">
+      <button type="submit" aria-label="검색">
+        <img src="img/ic-search.svg" alt="" width="20" height="20">
+      </button>
+    </form>
+
+    <a href="index.html" class="logo">
+      <img src="img/logo.jpg" alt="대한청각학회">
+    </a>
+
+    <div class="top-actions">
+      <a href="#" class="login-join">
+        <img src="img/ic-login.svg" alt="" width="20" height="20">LOGIN
+      </a>
+      <a href="#" class="login-join join">
+        <img src="img/ic-join.svg" alt="" width="20" height="20">JOIN
+      </a>
+      <a href="#" class="pill">ENGLISH</a>
+      <a href="#" class="sns" aria-label="유튜브"><img src="img/sns-youtube.png" alt="" width="44" height="44"></a>
+      <a href="#" class="sns" aria-label="페이스북"><img src="img/sns-facebook.png" alt="" width="44" height="44"></a>
+    </div>
+  </div>
+
+  <nav class="navbar">
+    <div class="wrap">
+      <ul class="nav-menu">
+        <li class="active"><a href="sub.html">학회소개</a></li>
+        <li><a href="#">학술행사</a></li>
+        <li><a href="#">간행/학회지</a></li>
+        <li><a href="#">청각기관 F&Q</a></li>
+        <li><a href="#">자료실</a></li>
+        <li><a href="#">구인구직 게시판</a></li>
+        <li><a href="#">회원공간</a></li>
+      </ul>
+      <button class="nav-toggle" aria-label="전체메뉴">
+        <img src="img/ic-menu.svg" alt="" width="40" height="40">
+      </button>
+    </div>
+  </nav>
+
+  <dialog class="drawer" id="navDrawer" aria-label="전체메뉴">
+    <div class="drawer-head">
+      <span>전체메뉴</span>
+      <button class="drawer-close" aria-label="메뉴 닫기">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <line x1="5" y1="5" x2="19" y2="19" />
+          <line x1="19" y1="5" x2="5" y2="19" />
+        </svg>
+      </button>
+    </div>
+    <ul class="drawer-menu" id="drawerMenuList"></ul>
+  </dialog>
+
+  <section class="sub-hero">
+    <div class="wrap">
+      <div class="breadcrumb-top">
+        <svg width="14" height="14" viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
+        <span>&gt;</span>
+        <span>학회소개</span>
+        <span>&gt;</span>
+        <span style="color: #007EFF; font-weight: 600;">인사말</span>
+      </div>
+      <h1>인사말</h1>
+    </div>
+  </section>
+
+  <div class="sub-nav-bar">
+    <div class="wrap">
+      <a href="index.html" class="lnb-home" aria-label="홈으로">
+        <svg width="16" height="16" fill="#fff" viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
+      </a>
+
+      <div class="lnb-select-wrap" onclick="toggleLnb(this)">
+        <span>학회소개</span>
+        <svg width="12" height="8" viewBox="0 0 12 8" fill="none" stroke="#fff" stroke-width="1.8"><polyline points="1 1 6 6 11 1"/></svg>
+        <ul class="lnb-dropdown-menu">
+          <li><a href="sub.html">학회소개</a></li>
+          <li><a href="#">학술행사</a></li>
+          <li><a href="#">간행/학회지</a></li>
+          <li><a href="#">청각기관 F&Q</a></li>
+          <li><a href="#">자료실</a></li>
+        </ul>
+      </div>
+
+      <div class="lnb-select-wrap" onclick="toggleLnb(this)">
+        <span>인사말</span>
+        <svg width="12" height="8" viewBox="0 0 12 8" fill="none" stroke="#fff" stroke-width="1.8"><polyline points="1 1 6 6 11 1"/></svg>
+        <ul class="lnb-dropdown-menu">
+          <li><a href="sub.html">인사말</a></li>
+          <li><a href="#">조직/임원</a></li>
+          <li><a href="#">연혁</a></li>
+          <li><a href="#">미션과비전</a></li>
+          <li><a href="#">회칙</a></li>
+          <li><a href="#">사무국 안내</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <main class="sub-content-sec">
+    <div class="wrap">
+      
+
+      <div class="greeting-grid">
+        <div class="profile-card">
+          <img src="img/인사말_회장 이규엽.png" alt="대한청각학회 회장 이규엽">
+        </div>
+
+        <div class="greeting-body">
+          <div class="greeting-header">
+        <h2>존경하는 <span>대한청각학회</span> 회원님들께 인사를 드립니다.</h2>
+        <h3>제 31대 대한청각학회 회장을 맡게 된 이규엽입니다.</h3>
+      </div>
+          <p>존경하는 대한청각학회 회원 여러분, 먼저 오랜 역사와 전통을 지닌 대한청각학회의 제31대 회장으로 취임하게 되어 큰 영광과 막중한 책임을 느낍니다. 1966년 창립 이래 60년의 시간 동안 대한청각학회는 청각학 분야를 선도하며 국민의 청각 건강 증진을 위해 쉬지 않고 달려왔습니다. 그 길 위에는 전임 회장님들과 임원진 여러분의 탁월한 리더십, 그리고 늘 학회를 믿고 함께해 주신 회원 여러분의 변함없는 헌신이 있었습니다. 깊은 감사의 말씀을 드립니다.</p>
+
+          <p>저를 비롯한 제31대 집행부는 전통을 존중하고 계승하면서도, 미래를 향한 새로운 도약을 준비하고자 합니다. 학회의 핵심 가치와 목표를 실현하기 위해 다음과 같은 과제들을 중점적으로 추진하겠습니다.</p>
+
+          <p><strong>첫째, 난청 조기진단과 재활에 대한 국가적 관심과 정책 반영을 위해 지속적인 노력을 기울이겠습니다.</strong> 더 나아가, 학동기 아동과 성인, 노년층에 이르기까지 생애 전 주기를 아우르는 청각 건강관리 체계를 구축하기 위한 기반을 마련하겠습니다. 우리 국민이 각 연령대에 맞는 적절한 청각 의료 서비스를 받을 수 있도록 정책적 제안과 실천적 노력을 이어가겠습니다. 이를 위해 난청 조기진단 재활의 역할을 확대하고, 전문가뿐 아니라 환자, 지역사회, 정책 당국과의 소통을 지속적으로 만들어가겠습니다.</p>
+
+          <p><strong>둘째, 학회의 연구 역량을 제고하고, 회원들의 연구 참여 기반을 확대하겠습니다.</strong> 학회 주도 연구를 체계화하고, 결과 공유를 위한 시스템을 강화하겠습니다. 아울러 학술지 Journal of Audiology & Otology의 SCIE 등재를 목표로, 투고 활성화 및 질적 향상을 위한 다각적 지원을 아끼지 않겠습니다. 이를 위해 대한이비인후과학회와의 긴밀한 협력을 바탕으로 공동의 전략을 마련하고, 저널의 국제적 위상을 높이기 위한 공동 캠페인과 학술 네트워크 구축 등 실질적인 협력을 추진하겠습니다.</p>
+
+          <p><strong>셋째, 차세대 청각학 전문가 양성에 힘쓰겠습니다.</strong> 전공의와 청각학 전공 학생들이 학회 활동에 자연스럽게 참여하고 성장할 수 있는 환경을 조성하겠습니다. 청각검사 강습회와 청각검사 워크숍을 보다 실용적이고 체계적으로 발전시켜 청각검사 위한 이론 및 술기 교육을 강화하고, 새로운 교육 프로그램을 통해 실제 진료 현장에서 도움이 되는 학습 기회를 제공하겠습니다.</p>
+
+          <p><strong>넷째, 학술활동의 국제화를 지속하고, 세계와 소통하는 학회를 만들겠습니다.</strong> 포스트 코로나 시대에 발맞춘 온·오프라인 병행 학술행사 운영을 통해 더 많은 회원들의 참여를 이끌고, 2026년 서울에서 개최될 37회 세계청각학회(World Congress of Audiology)의 성공적인 개최를 위해 노력하겠습니다. 이를 통해 대한청각학회가 명실상부한 글로벌 학회로 도약할 수 있도록 최선을 다하겠습니다.</p>
+
+          <p>존경하는 회원 여러분, 어려운 현실이지만 대한청각학회의 현재는 여러분의 참여와 헌신 위에 서 있으며, 미래 또한 여러분과 함께 만들어 가야 할 소중한 여정입니다. 저는 언제나 열린 마음으로 회원 여러분의 목소리를 경청하겠습니다. 우리 모두의 전문성과 열정이 모여 학회의 발전은 물론, 국민의 청각 건강 향상에도 큰 기여를 할 수 있다고 믿습니다. 많은 관심과 조언, 그리고 따뜻한 응원을 부탁드립니다.</p>
+
+          <div class="greeting-sign">
+            <div class="date">2025년 5월 11일</div>
+            <div class="name">제31대 대한청각학회 회장 <strong>이규엽</strong></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer>
+    <div class="wrap foot-flex">
+      <div class="foot-brand">
+        <img src="img/logo.jpg" alt="대한청각학회">
+        <div class="foot-info">
+          <p>
+            대한청각학회<br>
+            서울특별시 동작구 보라매로5길 20 1동 2층 이비인후과<br>
+            <span class="nowrap">TEL : 02-3784-8551</span><span class="bar">|</span><span class="nowrap">FAX :
+              0505-115-8551</span><span class="bar">|</span><span class="nowrap">E-mail : kaudio2009@naver.com</span>
+          </p>
+          <p class="copyright">copyright @ 2007 THE KOREAN AUDIOLOGICAL SOCIETY. All rights reserved</p>
+        </div>
+      </div>
+      <div class="foot-actions">
+        <a class="foot-btn strong" href="#">개인정보취급방침</a>
+        <a class="foot-btn" href="#">이메일주소 무단수집거부</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    /* ---------- 1. GNB 데이터 정의 (메인페이지와 동일) ---------- */
+    const gnbData = [
+      {
+        title: "학회소개",
+        link: "sub.html",
+        sub: [
+          { name: "인사말", link: "sub.html" },
+          { name: "조직/임원", link: "#" },
+          { name: "연혁", link: "#" },
+          { name: "미션과비전", link: "#" },
+          { name: "회칙", link: "#" },
+          { name: "사무국 안내", link: "#" },
+          { name: "학회 공지/소식", link: "#" },
+          { name: "관련사이트", link: "#" }
+        ]
+      },
+      {
+        title: "학술행사",
+        link: "#",
+        sub: [
+          { name: "학술대회 일정", link: "#" },
+          { name: "사전등록 안내", link: "#" },
+          { name: "지난 학술대회", link: "#" },
+          { name: "연수강좌", link: "#" }
+        ]
+      },
+      {
+        title: "간행/학회지",
+        link: "#",
+        sub: [
+          { name: "Journal(JAO)", link: "#" },
+          { name: "학회지 검색", link: "#" },
+          { name: "논문 투고 안내", link: "#" }
+        ]
+      },
+      {
+        title: "청각기관 F&Q",
+        link: "#",
+        sub: [
+          { name: "자주 묻는 질문", link: "#" },
+          { name: "신생아 청각선별검사", link: "#" },
+          { name: "인공와우 정보", link: "#" }
+        ]
+      },
+      {
+        title: "자료실",
+        link: "#",
+        sub: [
+          { name: "서식 자료실", link: "#" },
+          { name: "교육 자료실", link: "#" },
+          { name: "홍보자료", link: "#" }
+        ]
+      },
+      {
+        title: "구인구직 게시판",
+        link: "#",
+        sub: [
+          { name: "구인 게시판", link: "#" },
+          { name: "구직 게시판", link: "#" }
+        ]
+      },
+      {
+        title: "회원공간",
+        link: "#",
+        sub: [
+          { name: "회원가입 안내", link: "#" },
+          { name: "마이페이지", link: "#" },
+          { name: "회비 납부", link: "#" }
+        ]
+      }
+    ];
+
+    (function initGnb() {
+      const navbar = document.querySelector('.navbar');
+      const menuItems = document.querySelectorAll('.nav-menu > li');
+      if (!navbar) return;
+
+      // 1. 각 원뎁스 메뉴별 1줄 drop-down 생성
+      menuItems.forEach((li, idx) => {
+        const data = gnbData[idx];
+        if (data && data.sub && data.sub.length > 0) {
+          const subUl = document.createElement('ul');
+          subUl.className = 'sub-dropdown';
+
+          data.sub.forEach(subItem => {
+            const subLi = document.createElement('li');
+            const subA = document.createElement('a');
+            subA.href = subItem.link;
+            subA.textContent = subItem.name;
+            subLi.appendChild(subA);
+            subUl.appendChild(subLi);
+          });
+          li.appendChild(subUl);
+        }
+      });
+
+      // 2. 데스크톱 햄버거 버튼용 메가 드롭다운 생성
+      const dropdown = document.createElement('div');
+      dropdown.className = 'gnb-dropdown';
+      dropdown.id = 'gnbDropdown';
+
+      const wrap = document.createElement('div');
+      wrap.className = 'wrap';
+
+      gnbData.forEach(item => {
+        const col = document.createElement('div');
+        col.className = 'gnb-depth-col';
+
+        const ul = document.createElement('ul');
+        item.sub.forEach(subItem => {
+          const li = document.createElement('li');
+          const a = document.createElement('a');
+          a.href = subItem.link;
+          a.textContent = subItem.name;
+          li.appendChild(a);
+          ul.appendChild(li);
+        });
+        col.appendChild(ul);
+        wrap.appendChild(col);
+      });
+
+      dropdown.appendChild(wrap);
+      navbar.appendChild(dropdown);
+
+      // 3. 모바일 사이드 드로어 메뉴 동적 생성 (아코디언 기능)
+      const drawerMenuList = document.getElementById('drawerMenuList');
+      if (drawerMenuList) {
+        gnbData.forEach(item => {
+          const li = document.createElement('li');
+
+          const headDiv = document.createElement('div');
+          headDiv.className = 'drawer-item-head';
+
+          const mainA = document.createElement('a');
+          mainA.href = item.link;
+          mainA.textContent = item.title;
+
+          const toggleBtn = document.createElement('span');
+          toggleBtn.className = 'drawer-toggle-btn';
+          toggleBtn.innerHTML = '▼';
+
+          headDiv.appendChild(mainA);
+          headDiv.appendChild(toggleBtn);
+          li.appendChild(headDiv);
+
+          if (item.sub && item.sub.length > 0) {
+            const subUl = document.createElement('ul');
+            subUl.className = 'drawer-sub-menu';
+
+            item.sub.forEach(subItem => {
+              const subLi = document.createElement('li');
+              const subA = document.createElement('a');
+              subA.href = subItem.link;
+              subA.textContent = subItem.name;
+              subLi.appendChild(subA);
+              subUl.appendChild(subLi);
+            });
+            li.appendChild(subUl);
+
+            headDiv.addEventListener('click', (e) => {
+              if (e.target === toggleBtn || e.target === headDiv) {
+                e.preventDefault();
+                li.classList.toggle('active');
+              }
+            });
+          }
+
+          drawerMenuList.appendChild(li);
+        });
+      }
+
+      // 햄버거 버튼 이벤트 토글
+      const navToggle = document.querySelector('.nav-toggle');
+      const drawer = document.getElementById('navDrawer');
+
+      navToggle.addEventListener('click', (e) => {
+        e.stopPropagation();
+        if (window.innerWidth <= 860) {
+          if (drawer) drawer.showModal();
+        } else {
+          dropdown.classList.toggle('open');
+        }
+      });
+
+      document.addEventListener('click', (e) => {
+        if (!navbar.contains(e.target)) {
+          dropdown.classList.remove('open');
+        }
+      });
+    })();
+
+    /* ---------- 모바일 드로어 닫기 ---------- */
+    (function () {
+      const dlg = document.getElementById('navDrawer');
+      if (!dlg) return;
+      dlg.querySelector('.drawer-close').addEventListener('click', () => dlg.close());
+      dlg.addEventListener('click', e => { if (e.target === dlg) dlg.close(); });
+    })();
+
+    /* LNB 드롭다운 토글 제어 함수 */
+    function toggleLnb(element) {
+      const allSelects = document.querySelectorAll('.lnb-select-wrap');
+      allSelects.forEach(el => {
+        if (el !== element) el.classList.remove('open');
+      });
+      element.classList.toggle('open');
+    }
+
+    // 바깥 영역 클릭 시 LNB 드롭다운 닫기
+    document.addEventListener('click', (e) => {
+      if (!e.target.closest('.lnb-select-wrap')) {
+        document.querySelectorAll('.lnb-select-wrap').forEach(el => el.classList.remove('open'));
+      }
+    });
+  </script>
+</body>
+
+</html>
