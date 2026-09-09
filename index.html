@@ -98,6 +98,32 @@
       box-sizing: border-box;
     }
 
+    /* 전역 스크롤바 숨김 처리 (기능은 유지) */
+    html,
+    body,
+    div,
+    section,
+    ul,
+    dialog {
+      -ms-overflow-style: none;
+      /* IE and Edge */
+      scrollbar-width: none;
+      /* Firefox */
+    }
+
+    html::-webkit-scrollbar,
+    body::-webkit-scrollbar,
+    div::-webkit-scrollbar,
+    section::-webkit-scrollbar,
+    ul::-webkit-scrollbar,
+    dialog::-webkit-scrollbar,
+    *::-webkit-scrollbar {
+      display: none !important;
+      /* Chrome, Safari, Opera */
+      width: 0 !important;
+      height: 0 !important;
+    }
+
     html {
       scroll-behavior: smooth;
     }
@@ -170,6 +196,7 @@
       border-radius: 500px;
       padding: 8px 20px;
       transition: border-color .2s, box-shadow .2s;
+      width: 260px;
     }
 
     .search-box:hover {
@@ -229,10 +256,12 @@
       opacity: .75;
     }
 
+    /* 로고: 폭/높이를 고정하지 않고 원본 비율 그대로 표시 (최대 높이만 제한) */
     .logo img {
-      width: 181px;
-      height: 54px;
-      object-fit: contain;
+      width: auto;
+      height: auto;
+      max-height: 72px;
+      max-width: 100%;
     }
 
     .top-actions {
@@ -335,14 +364,15 @@
       align-items: stretch;
     }
 
-    .nav-menu li {
+    .nav-menu>li {
+      position: relative;
       display: flex;
       flex: 1;
       min-width: 0;
       align-items: stretch;
     }
 
-    .nav-menu a {
+    .nav-menu>li>a {
       display: flex;
       align-items: center;
       justify-content: center;
@@ -357,12 +387,51 @@
       transition: background .25s;
     }
 
-    .nav-menu li.active a {
+    .nav-menu li.active>a,
+    .nav-menu>li:hover>a {
       background: #336ba5;
     }
 
-    .nav-menu a:hover {
-      background: #336ba5;
+    .nav-menu .sub-dropdown {
+      position: absolute;
+      top: 100%;
+      left: 0;
+      width: 100%;
+      background: #ffffff;
+      border-top: 3px solid #00468e;
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.12);
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(10px);
+      transition: all 0.25s ease;
+      z-index: 50;
+      padding: 8px 0;
+      border-radius: 0 0 8px 8px;
+      text-align: center;
+    }
+
+    .nav-menu>li:hover .sub-dropdown {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0);
+    }
+
+    /* 2뎁스는 1뎁스(17px)보다 한 단계 작게 */
+    .nav-menu .sub-dropdown li a {
+      display: block;
+      padding: 9px 8px;
+      font-size: 15px;
+      line-height: 22px;
+      font-weight: 500;
+      color: #333;
+      word-break: keep-all;
+      transition: background 0.2s, color 0.2s;
+    }
+
+    .nav-menu .sub-dropdown li a:hover {
+      background: #eaf1fc;
+      color: #00468e;
+      font-weight: 600;
     }
 
     .nav-toggle {
@@ -392,7 +461,7 @@
       right: 0;
       background: #f8f9fa;
       border-bottom: 2px solid #00468e;
-      box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
       max-height: 0;
       overflow: hidden;
       transition: max-height 0.35s ease-in-out, opacity 0.3s;
@@ -405,51 +474,54 @@
       opacity: 1;
     }
 
+    /* 우측 96px = .wrap 좌우여백 32px + .nav-toggle 폭 64px
+       → 2뎁스 칼럼 영역이 1뎁스 메뉴 영역과 정확히 일치 */
     .gnb-dropdown .wrap {
       display: flex;
       align-items: flex-start;
-      padding: 24px 32px;
+      padding: 24px 96px 24px 32px;
     }
 
     .gnb-depth-col {
       flex: 1;
+      min-width: 0;
       border-right: 1px solid #e9ecef;
-      padding: 0 16px;
+      padding: 0 8px;
+      text-align: center;
     }
 
     .gnb-depth-col:last-child {
       border-right: none;
     }
 
-    .gnb-depth-col h5 {
-      font-size: 17px;
-      font-weight: 700;
-      color: #00468e;
-      margin-bottom: 12px;
-      padding-bottom: 6px;
-    }
-
     .gnb-depth-col ul li {
-      margin-bottom: 14px;
+      margin-bottom: 10px;
     }
 
+    .gnb-depth-col ul li:last-child {
+      margin-bottom: 0;
+    }
+
+    /* 2뎁스는 1뎁스(17px)보다 한 단계 작게 */
     .gnb-depth-col ul li a {
-      font-size: 17px;
-      font-weight: 400;
+      font-size: 15px;
+      line-height: 22px;
+      font-weight: 500;
       color: #495057;
+      word-break: keep-all;
       transition: color 0.2s, font-weight 0.2s;
       display: block;
     }
 
     .gnb-depth-col ul li a:hover {
       color: #0080ff;
-      font-weight: 600;
+      font-weight: 700;
     }
 
-    /* ===== DRAWER ===== */
+    /* ===== DRAWER (모바일 사이드 슬라이드 메뉴) ===== */
     .drawer {
       margin: 0 0 0 auto;
-      width: min(320px, 82vw);
+      width: min(320px, 85vw);
       max-width: none;
       height: 100%;
       max-height: 100%;
@@ -459,6 +531,7 @@
       color: #fff;
       transform: translateX(100%);
       transition: transform .28s ease, overlay .28s allow-discrete, display .28s allow-discrete;
+      overflow-y: auto;
     }
 
     .drawer[open] {
@@ -509,31 +582,63 @@
 
     .drawer-menu {
       display: block;
-      padding: 8px 0;
+      padding: 12px 0;
     }
 
-    .drawer-menu li {
+    .drawer-menu>li {
       display: block;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
     }
 
-    .drawer-menu a {
-      display: block;
+    .drawer-menu .drawer-item-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
       padding: 16px 20px;
+      cursor: pointer;
+    }
+
+    .drawer-menu .drawer-item-head a {
       font-size: 17px;
-      font-weight: 600;
-      color: #c3d3ec;
-      transition: color .2s, background .2s;
-    }
-
-    .drawer-menu a:hover {
-      color: #fff;
-      background: rgba(255, 255, 255, .1);
-    }
-
-    .drawer-menu li.active a {
-      color: #fff;
-      background: var(--blue-mid);
       font-weight: 700;
+      color: #fff;
+    }
+
+    .drawer-menu .drawer-toggle-btn {
+      color: #9aa3af;
+      font-size: 14px;
+      transition: transform 0.25s;
+    }
+
+    .drawer-menu>li.active .drawer-toggle-btn {
+      transform: rotate(180deg);
+      color: #fff;
+    }
+
+    .drawer-sub-menu {
+      max-height: 0;
+      overflow: hidden;
+      background: rgba(0, 0, 0, 0.2);
+      transition: max-height 0.3s ease, padding 0.3s ease;
+      padding: 0 20px;
+    }
+
+    .drawer-menu>li.active .drawer-sub-menu {
+      max-height: 500px;
+      padding: 10px 20px 16px 20px;
+    }
+
+    .drawer-sub-menu li a {
+      display: block;
+      padding: 8px 0;
+      font-size: 15px;
+      color: #c3d3ec;
+      transition: color 0.2s;
+    }
+
+    .drawer-sub-menu li a:hover {
+      color: #ffffff;
+      font-weight: 600;
     }
 
     /* ===== HERO BANNER ===== */
@@ -710,7 +815,8 @@
 
     .sec-head {
       display: flex;
-      align-items: flex-end;
+      /* 더보기 버튼을 헤더 블록 세로 중앙에 정렬 */
+      align-items: center;
       justify-content: space-between;
       margin-bottom: 38px;
       flex-wrap: wrap;
@@ -744,6 +850,10 @@
       margin-left: 2px;
     }
 
+    .sec-head .desc .m-br {
+      display: inline;
+    }
+
     .sec-head-left {
       display: flex;
       flex-direction: column;
@@ -758,14 +868,36 @@
       display: flex;
       align-items: center;
       justify-content: center;
+      /* 인라인 SVG의 baseline 여백 제거 */
+      line-height: 0;
+      padding: 0;
       flex-shrink: 0;
-      transition: background .2s, transform .2s, color .2s;
+      transition: background .2s, transform .2s, color .2s, border-color .2s, box-shadow .2s;
+    }
+
+    .more-btn svg {
+      display: block;
     }
 
     .more-btn:hover {
       background: var(--blue-bright);
       color: #fff;
       transform: rotate(90deg);
+    }
+
+    /* EVENT 섹션 더보기 버튼 색상 강화 */
+    #event .more-btn {
+      background: #ffffff;
+      color: #00468b;
+      border: 1px solid #cce2fd;
+      box-shadow: 0 4px 10px rgba(0, 70, 139, 0.12);
+    }
+
+    #event .more-btn:hover {
+      background: #00468b;
+      color: #ffffff;
+      border-color: #00468b;
+      box-shadow: 0 6px 14px rgba(0, 70, 139, 0.25);
     }
 
     /* ===== NEWS ===== */
@@ -879,19 +1011,66 @@
     }
 
     .card {
+      position: relative;
       border-radius: 20px;
       padding: 20px;
       min-height: 190px;
       display: flex;
       flex-direction: column;
       background: #fff;
-      filter: drop-shadow(0 4px 7px rgba(0, 0, 0, .14));
+      filter: drop-shadow(0 2px 4px rgba(0, 0, 0, .12));
       transition: transform .28s cubic-bezier(.2, .8, .3, 1), filter .28s;
+    }
+
+    /* 호버 딤드 레이어 */
+    .card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: inherit;
+      background: rgba(135, 143, 154, .35);
+      opacity: 0;
+      transition: opacity .28s ease;
+      pointer-events: none;
+      z-index: 2;
+    }
+
+    /* 호버 (+) 아이콘 */
+    .card::after {
+      content: '+';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 62px;
+      height: 62px;
+      margin: -31px 0 0 -31px;
+      border-radius: 50%;
+      background: #fff;
+      color: #0080ff;
+      font-size: 34px;
+      font-weight: 400;
+      line-height: 62px;
+      text-align: center;
+      box-shadow: 0 10px 24px rgba(0, 40, 90, .3);
+      opacity: 0;
+      transform: scale(.7);
+      transition: opacity .28s ease, transform .28s cubic-bezier(.2, .8, .3, 1);
+      pointer-events: none;
+      z-index: 3;
     }
 
     .card:hover {
       transform: translateY(-8px);
-      filter: drop-shadow(0 12px 20px rgba(0, 0, 0, .2));
+      filter: drop-shadow(0 6px 10px rgba(0, 0, 0, .18));
+    }
+
+    .card:hover::before {
+      opacity: 1;
+    }
+
+    .card:hover::after {
+      opacity: 1;
+      transform: scale(1);
     }
 
     .card-title {
@@ -900,19 +1079,39 @@
       gap: 10px;
     }
 
-    /* ===== 🔔 종 흔들림(Ringing) 애니메이션 ===== */
+    /* 🔔 종 흔들림 Keyframes */
     @keyframes ring {
-      0% { transform: rotate(0deg); }
-      15% { transform: rotate(20deg); }
-      30% { transform: rotate(-15deg); }
-      45% { transform: rotate(10deg); }
-      60% { transform: rotate(-5deg); }
-      75% { transform: rotate(2deg); }
-      100% { transform: rotate(0deg); }
+      0% {
+        transform: rotate(0deg);
+      }
+
+      15% {
+        transform: rotate(20deg);
+      }
+
+      30% {
+        transform: rotate(-15deg);
+      }
+
+      45% {
+        transform: rotate(10deg);
+      }
+
+      60% {
+        transform: rotate(-5deg);
+      }
+
+      75% {
+        transform: rotate(2deg);
+      }
+
+      100% {
+        transform: rotate(0deg);
+      }
     }
 
     .card .tag img {
-      transform-origin: top center; 
+      transform-origin: top center;
       height: 36px;
     }
 
@@ -973,20 +1172,25 @@
       overflow-x: auto;
       padding-top: 88px;
       padding-bottom: 40px;
-      padding-left: 0;
+      /* 좌측 끝 카드의 그림자가 잘리지 않도록 여백을 두고 음수 마진으로 위치 보정 */
+      padding-left: 24px;
       padding-right: 0;
+      margin-left: -24px;
+      scroll-padding-left: 24px;
       margin-top: -38px;
-      scrollbar-width: none;
       cursor: grab;
       user-select: none;
+      /* 카드 단위로 딱 맞춰 멈추도록 */
+      scroll-snap-type: x mandatory;
     }
 
     .event-slider.dragging {
       cursor: grabbing;
     }
 
-    .event-slider::-webkit-scrollbar {
-      display: none;
+    /* 드래그하는 동안에는 스냅 해제 (손 따라 부드럽게) */
+    .event-slider.dragging {
+      scroll-snap-type: none;
     }
 
     .event-card {
@@ -998,13 +1202,60 @@
       position: relative;
       display: flex;
       flex-direction: column;
-      filter: drop-shadow(0 4px 7px rgba(0, 0, 0, .14));
+      scroll-snap-align: start;
+      filter: drop-shadow(0 2px 4px rgba(0, 0, 0, .12));
       transition: transform .28s cubic-bezier(.2, .8, .3, 1), filter .28s;
+    }
+
+    /* 호버 딤드 레이어 (NEWS 카드와 동일) */
+    .event-card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: inherit;
+      background: rgba(135, 143, 154, .35);
+      opacity: 0;
+      transition: opacity .28s ease;
+      pointer-events: none;
+      z-index: 2;
+    }
+
+    /* 호버 (+) 아이콘 */
+    .event-card::after {
+      content: '+';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 62px;
+      height: 62px;
+      margin: -31px 0 0 -31px;
+      border-radius: 50%;
+      background: #fff;
+      color: #0080ff;
+      font-size: 34px;
+      font-weight: 400;
+      line-height: 62px;
+      text-align: center;
+      box-shadow: 0 10px 24px rgba(0, 40, 90, .3);
+      opacity: 0;
+      transform: scale(.7);
+      transition: opacity .28s ease, transform .28s cubic-bezier(.2, .8, .3, 1);
+      pointer-events: none;
+      z-index: 3;
     }
 
     .event-card:hover {
       transform: translateY(-8px);
-      filter: drop-shadow(0 12px 20px rgba(0, 0, 0, .2));
+      filter: drop-shadow(0 6px 10px rgba(0, 0, 0, .18));
+    }
+
+    .event-card:hover::before {
+      opacity: 1;
+    }
+
+    .event-card:hover::after {
+      opacity: 1;
+      transform: scale(1);
     }
 
     .event-badge {
@@ -1014,15 +1265,17 @@
       width: 110px;
       height: 110px;
       border-radius: 500px;
-      background: linear-gradient(180deg, #00468b, #001325);
+      background: linear-gradient(180deg, #4bb0ff 0%, #0068cf 100%);
       color: #fff;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
       font-family: 'Paperozi', sans-serif;
-      box-shadow: 0 6px 14px rgba(0, 19, 37, .28);
+      box-shadow: 0 6px 14px rgba(0, 80, 160, .3);
       transition: transform .4s cubic-bezier(.2, .8, .3, 1), box-shadow .4s;
+      /* 딤드 레이어보다 위에 표시 */
+      z-index: 4;
     }
 
     .event-badge::after {
@@ -1037,9 +1290,68 @@
       pointer-events: none;
     }
 
+    /* 롤링될 때 PC 호버와 동일한 연출을 1회 재생 */
+    @keyframes badge-hover-once {
+
+      0%,
+      100% {
+        transform: translateY(0) scale(1);
+        box-shadow: 0 6px 14px rgba(0, 80, 160, .3);
+      }
+
+      40%,
+      65% {
+        transform: translateY(-6px) scale(1.08);
+        box-shadow: 0 16px 28px rgba(0, 120, 220, .45);
+      }
+    }
+
+    @keyframes badge-ring-once {
+      0% {
+        opacity: 0;
+        transform: scale(1);
+      }
+
+      40%,
+      65% {
+        opacity: 1;
+        transform: scale(1.2);
+      }
+
+      100% {
+        opacity: 0;
+        transform: scale(1.2);
+      }
+    }
+
+    @keyframes badge-d-once {
+
+      0%,
+      100% {
+        letter-spacing: 0;
+      }
+
+      40%,
+      65% {
+        letter-spacing: .5px;
+      }
+    }
+
+    .event-badge.flash {
+      animation: badge-hover-once 1.1s cubic-bezier(.2, .8, .3, 1);
+    }
+
+    .event-badge.flash::after {
+      animation: badge-ring-once 1.1s cubic-bezier(.2, .8, .3, 1);
+    }
+
+    .event-badge.flash .d {
+      animation: badge-d-once 1.1s cubic-bezier(.2, .8, .3, 1);
+    }
+
     .event-card:hover .event-badge {
       transform: translateY(-6px) scale(1.08);
-      box-shadow: 0 16px 28px rgba(0, 70, 139, .45);
+      box-shadow: 0 16px 28px rgba(0, 120, 220, .45);
     }
 
     .event-card:hover .event-badge::after {
@@ -1092,7 +1404,7 @@
       gap: 6px;
     }
 
-    .event-card .meta + .meta {
+    .event-card .meta+.meta {
       margin-top: 10px;
     }
 
@@ -1116,7 +1428,7 @@
       transition: width .35s ease;
     }
 
-    /* ===== QUICK MENU (✨ 기획서 시안 A, B 기반 Flex Grow 호버 인터랙션 구현) ===== */
+    /* ===== QUICK MENU ===== */
     .quick-title {
       margin-bottom: 38px;
     }
@@ -1150,7 +1462,7 @@
 
     .qm-item {
       position: relative;
-      flex: 1; /* 기본 5개 동일 너비 균등 분배 */
+      flex: 1;
       overflow: hidden;
       background-size: cover;
       background-position: center;
@@ -1184,13 +1496,12 @@
       transition: transform 0.6s cubic-bezier(.2, .8, .3, 1), filter 0.4s ease;
     }
 
-    /* 🎯 탭 호버 시 너비 확장 (기획서 B 구현: 호버된 탭 비율 증가, 나머지 균등 축소) */
     .quick-grid:hover .qm-item {
-      flex: 0.8; /* 호버되지 않은 비활성 탭 너비 균등 감소 */
+      flex: 0.8;
     }
 
     .quick-grid .qm-item:hover {
-      flex: 2.2; /* 호버된 활성 탭 너비 대폭 확장 */
+      flex: 2.2;
     }
 
     .qm-item:hover img {
@@ -1227,7 +1538,6 @@
       letter-spacing: -.3px;
     }
 
-    /* 호버 시 우측에 강조 화살표 나타남 */
     .qm-arrow {
       position: relative;
       z-index: 2;
@@ -1380,7 +1690,9 @@
       box-shadow: 0 4px 14px rgba(0, 0, 0, .24);
       color: #fff;
       display: flex;
-      align-items: flex-start;
+      /* 타이틀을 카드 정중앙에 배치 */
+      align-items: center;
+      justify-content: center;
       transition: transform .3s;
     }
 
@@ -1399,11 +1711,12 @@
     .jcard .jtxt {
       position: relative;
       z-index: 2;
+      width: 100%;
       padding: 25px;
       font-size: 22px;
       font-weight: 600;
       line-height: 30px;
-      text-align: left;
+      text-align: center;
     }
 
     .jcard:hover {
@@ -1442,7 +1755,7 @@
       gap: 100px;
       flex-wrap: wrap;
       justify-content: space-between;
-      width: 1300px;
+      width: 100%;
     }
 
     .anniv-brand {
@@ -1486,10 +1799,18 @@
       gap: 10px;
     }
 
+    /* 포인트 텍스트: 2px 확대 + 굵기 1단계 축소(700 → 600) */
     .anniv-card .t {
-      font-size: 21px;
-      line-height: 30px;
-      font-weight: 700;
+      font-size: 23px;
+      line-height: 32px;
+      font-weight: 600;
+    }
+
+    .anniv-card .t sup {
+      font-size: .58em;
+      font-weight: 600;
+      vertical-align: super;
+      line-height: 0;
     }
 
     .anniv-card .ic {
@@ -1501,9 +1822,11 @@
       transform: translateX(5px);
     }
 
+    /* 설명글: 2px 축소 + 카드 하단으로 정렬 맞춤 */
     .anniv-card p {
-      font-size: 17px;
-      line-height: 25px;
+      margin-top: auto;
+      font-size: 15px;
+      line-height: 23px;
       font-weight: 500;
       color: #fff;
     }
@@ -1646,11 +1969,6 @@
       gap: 10px;
       flex: 1;
       overflow-x: auto;
-      scrollbar-width: none;
-    }
-
-    .pt-track::-webkit-scrollbar {
-      display: none;
     }
 
     .pt-item {
@@ -1696,13 +2014,14 @@
       display: flex;
       align-items: flex-start;
       gap: 40px;
-      flex-shrink: 0;
+      flex: 1 1 420px;
+      min-width: 0;
     }
 
     .foot-brand img {
-      width: 181px;
-      height: 54px;
-      object-fit: contain;
+      width: 220px;
+      max-width: 100%;
+      height: auto;
       mix-blend-mode: multiply;
       flex-shrink: 0;
     }
@@ -1711,6 +2030,8 @@
       display: flex;
       flex-direction: column;
       gap: 12px;
+      flex: 1;
+      min-width: 0;
     }
 
     .foot-info p {
@@ -1718,6 +2039,18 @@
       font-weight: 400;
       line-height: 24px;
       color: #676767;
+      word-break: keep-all;
+      overflow-wrap: anywhere;
+    }
+
+    .foot-info .bar {
+      display: inline-block;
+      margin: 0 10px;
+      color: #c8c8c8;
+    }
+
+    .foot-info .nowrap {
+      white-space: nowrap;
     }
 
     .foot-info .copyright {
@@ -1755,14 +2088,12 @@
       background: #111;
     }
 
-    .copyright {
-      margin-top: 14px;
-      font-size: 14.5px;
-      color: #9aa3af;
-    }
-
     /* ===== RESPONSIVE MEDIA QUERIES ===== */
     @media(max-width: 1280px) {
+      .logo img {
+        max-height: 62px;
+      }
+
       .hero {
         height: 560px;
       }
@@ -1790,6 +2121,10 @@
       .hero-content p.eng {
         font-size: 16px;
       }
+
+      .anniv-flex {
+        gap: 40px;
+      }
     }
 
     @media(max-width: 1100px) {
@@ -1805,19 +2140,25 @@
         gap: 26px;
       }
 
+      /* 좁은 화면에서는 인라인 background-size(338px)를 무시하고 카드를 꽉 채움 */
       .jcard {
         flex: 1 1 calc(33.333% - 14px);
         min-height: 300px;
+        background-size: cover !important;
+        background-position: center !important;
       }
 
       .quick-grid {
-        display: grid;
-        grid-template-columns: repeat(3, 1fr);
-        height: auto;
+        display: flex;
+        flex-direction: column;
+        height: auto !important;
       }
 
       .qm-item {
-        height: 180px;
+        flex: none !important;
+        width: 100%;
+        height: 90px !important;
+        min-height: 90px !important;
         border-right: none;
         border-bottom: 1px solid rgba(255, 255, 255, 0.2);
       }
@@ -1832,7 +2173,7 @@
         height: auto;
         padding: 16px 20px;
         flex-wrap: wrap;
-        justify-content: center;
+        justify-content: space-between;
         gap: 12px;
       }
 
@@ -1840,12 +2181,20 @@
         position: static;
         transform: none;
         order: -1;
+      }
+
+      .logo img {
+        max-height: 60px;
+      }
+
+      .search-box {
+        order: 2;
         width: 100%;
-        justify-content: center;
       }
 
       .top-actions {
-        margin-left: 0;
+        order: 0;
+        margin-left: auto;
       }
 
       .hero {
@@ -1896,8 +2245,10 @@
         width: auto;
       }
 
+      /* 1단 배치로 바뀌는 구간부터 카드 간격 축소 (22px → 12px) */
       .news-cards {
         grid-template-columns: 1fr;
+        gap: 12px;
       }
 
       .nav-menu {
@@ -1923,67 +2274,159 @@
     }
 
     @media(max-width: 760px) {
+      .logo img {
+        max-height: 36px;
+      }
+
+      /* 모바일에서는 좌우 화살표 없이 자동 무한롤링만 사용 */
+      .pt-nav {
+        display: none;
+      }
+
+      .partner-sec {
+        padding: 8px 0;
+      }
+
       .hospital-sec {
         flex-direction: column;
       }
 
-      .hos-tile {
+      .hos-tile,
+      .hos-tile.right {
+        flex-direction: row;
         padding: 0 20px;
-        min-height: 96px;
+        min-height: 80px;
         gap: 16px;
         justify-content: flex-start;
       }
 
-      .hos-tile.right {
-        flex-direction: row-reverse;
-        justify-content: flex-end;
-      }
-
       .hos-tile .label {
-        font-size: 19px;
+        order: 1;
+        font-size: 17px;
+        line-height: 26px;
         white-space: normal;
       }
 
+      /* 두 타일 모두 화살표를 우측 끝으로 */
       .hos-tile .arrow {
+        order: 2;
+        margin-left: auto;
         width: 60px;
+        height: 36px;
+      }
+
+      /* 좌측 타일 화살표는 좌향이므로 좌우 반전해 우향으로 통일 */
+      .hos-tile.left .arrow,
+      .hos-tile.left:hover .arrow {
+        transform: scaleX(-1);
+      }
+
+      .quick-grid {
+        display: flex !important;
+        flex-direction: column !important;
+        height: auto !important;
+      }
+
+      .qm-item {
+        flex: none !important;
+        width: 100% !important;
+        height: 90px !important;
+        min-height: 90px !important;
+      }
+
+      .quick-grid:hover .qm-item,
+      .quick-grid .qm-item:hover {
+        flex: none !important;
       }
     }
 
-    /* 📱 모바일 화면 (max-width: 640px) 최상단 로고 배치, LOGIN/JOIN, ENGLISH/SNS 영역 숨김, 햄버거 버튼 우측 정렬 & 저널 세로 정렬 적용 */
+    /* 📱 모바일 디스플레이 최적화 (Max 640px) */
     @media(max-width: 640px) {
-      .wrap {
-        padding: 0 16px;
+
+      /* 모바일 화면 호버 인터랙션 전체 무효화 (터치시 흔들림/튀는 현상 제거) */
+      .card:hover,
+      .event-card:hover,
+      .journal-left .cover:hover,
+      .jcard:hover,
+      .anniv-card:hover,
+      .more-btn:hover,
+      .login-join:hover,
+      .pill:hover,
+      .sns:hover {
+        transform: none !important;
+        filter: none !important;
+        box-shadow: none !important;
       }
 
-      .sec {
-        padding: 40px 0;
+      /* 모바일에서는 딤드 + (+) 레이어도 표시하지 않음 (터치 후 잔상 방지) */
+      .card:hover::before,
+      .card:hover::after,
+      .event-card:hover::before,
+      .event-card:hover::after {
+        opacity: 0 !important;
+      }
+
+      /* 모바일 컨텐츠 좌우 여백 20px 지정 */
+      .wrap {
+        padding: 0 20px !important;
       }
 
       .topbar {
         height: auto;
-        padding: 16px;
-        flex-direction: column;
+        padding: 14px 20px !important;
+        flex-direction: row;
+        flex-wrap: wrap;
         align-items: center;
+        justify-content: space-between;
         gap: 12px;
+      }
+
+      .navbar .wrap {
+        padding: 0 20px !important;
+        justify-content: space-between;
+        align-items: center;
+        height: 52px;
+      }
+
+      .sec {
+        padding: 44px 0;
       }
 
       .logo {
         position: static;
         transform: none;
-        order: -1;
-        width: 100%;
-        display: flex;
-        justify-content: center;
-        margin-bottom: 2px;
+        order: 0;
+        margin-bottom: 0;
       }
 
       .logo img {
-        width: 135px;
-        height: auto;
+        max-height: 36px;
+      }
+
+      .top-actions {
+        display: flex !important;
+        order: 1;
+        gap: 6px;
+      }
+
+      .login-join {
+        height: 36px;
+        padding: 4px 12px;
+        font-size: 12px;
+      }
+
+      .login-join img {
+        width: 14px;
+        height: 14px;
+      }
+
+      .pill,
+      .sns {
+        display: none !important;
       }
 
       .search-box {
-        order: 1;
+        order: 2;
         width: 100%;
         height: 40px;
         gap: 12px;
@@ -1994,18 +2437,21 @@
         font-size: 13px;
       }
 
-      .login-join,
-      .top-actions {
-        display: none !important;
-      }
-
-      .navbar .wrap {
-        padding: 0 16px;
-        justify-content: flex-end;
+      .nav-menu {
+        display: none;
       }
 
       .nav-toggle {
         margin-left: auto;
+        width: 44px;
+        height: 44px;
+        border-radius: 8px;
+        background: transparent;
+      }
+
+      .nav-toggle img {
+        width: 32px;
+        height: 32px;
       }
 
       #news .sec-head-left,
@@ -2016,40 +2462,61 @@
       }
 
       .hero {
-        height: 360px;
+        height: auto !important;
+        min-height: 480px;
+        padding: 60px 0 80px 0;
       }
 
       .hero-content {
-        margin-top: 20px;
-        padding: 0 12px;
-        gap: 6px;
+        margin-top: 0;
+        padding: 0 20px;
+        gap: 12px;
       }
 
       .hero-content h1 {
         font-size: 26px;
         line-height: 36px;
+        word-break: keep-all;
       }
 
       .hero-content p.lead {
         font-size: 15px;
-        line-height: 22px;
+        line-height: 24px;
+        word-break: keep-all;
       }
 
       .hero-content p.eng {
         font-size: 13px;
-        line-height: 18px;
+        line-height: 20px;
+        word-break: keep-all;
       }
 
+      .hero-controls {
+        bottom: 20px;
+      }
+
+      /* 원 크기를 키우되, 좌우 간격을 화면 폭 비율(vw)로 잡아
+         어떤 기기 폭에서도 원이 화면 밖으로 잘리지 않도록 함 */
       .orb {
-        --orb: 60px;
+        --orb: clamp(56px, 17vw, 72px) !important;
+        --dx: 36vw !important;
+        --dx2: 13vw !important;
       }
 
       .sec-head h2,
       .quick-title h2,
       #news .sec-head h2,
       #event .sec-head h2 {
-        font-size: 26px;
-        line-height: 34px;
+        font-size: 28px;
+        line-height: 36px;
+      }
+
+      /* 모바일: 타이틀 옆 포인트 원 2px 축소 (10px → 8px) */
+      #news .sec-head h2 .dot,
+      #event .sec-head h2 .dot,
+      .quick-title .dot {
+        width: 8px;
+        height: 8px;
       }
 
       .sec-head .desc,
@@ -2059,9 +2526,15 @@
         line-height: 20px;
       }
 
+      /* 모바일 화면에서만 설명 문장 줄바꿈 적용 */
+      .sec-head .desc .m-br {
+        display: block !important;
+      }
+
       .more-btn {
-        width: 42px;
-        height: 42px;
+        width: 44px;
+        height: 44px;
+        border-radius: 10px;
       }
 
       .more-btn svg {
@@ -2069,51 +2542,126 @@
         height: 22px;
       }
 
+      /* NEWS 섹션 모바일 전용 수평 탭(Tab) 스타일 적용 */
+      .news-body {
+        gap: 20px;
+      }
+
+      .news-tabs {
+        width: 100%;
+        flex-direction: row;
+        border-bottom: 2px solid #e2e8f0;
+        padding-bottom: 0;
+        gap: 24px;
+      }
+
       .news-tabs button {
-        font-size: 16px;
-        line-height: 24px;
+        width: auto;
+        font-size: 18px;
+        line-height: 26px;
+        font-weight: 600;
+        color: #9195a9;
+        padding-bottom: 10px;
+        position: relative;
+        justify-content: flex-start;
+      }
+
+      .news-tabs button::after {
+        display: none !important;
+      }
+
+      .news-tabs button.active {
+        color: #00468b;
+        font-weight: 700;
+        border-bottom: 3px solid #00468b;
+        margin-bottom: -2px;
       }
 
       .card {
-        padding: 16px;
+        padding: 18px;
         min-height: auto;
       }
 
+      /* 모바일 화면에서 카드 타이틀 줄바꿈 없이 한 줄로 표기 및 말줄임 처리 */
       .card h3 {
-        font-size: 16px;
-        line-height: 24px;
+        font-size: 18px;
+        line-height: 26px;
         min-height: auto;
+        white-space: nowrap !important;
+        overflow: hidden !important;
+        text-overflow: ellipsis !important;
+        display: block !important;
+      }
+
+      /* 모바일 화면에서 NEWS 카드 안의 종 아이콘이 2.5초 간격으로 무한 반복 흔들림 적용 */
+      .card .tag img {
+        animation: ring 2.5s infinite ease-in-out !important;
       }
 
       .card .date {
         font-size: 13px;
-        margin-top: 12px;
+        margin-top: 14px;
       }
 
+      /* EVENT 슬라이더: 배지 크기에 맞춰 상단 여백 축소 + 카드 간격 축소 */
+      .event-slider {
+        gap: 14px;
+        padding-top: 52px;
+        padding-bottom: 24px;
+        margin-top: -22px;
+        -webkit-mask-image: linear-gradient(90deg, #000 0 calc(100% - 36px), transparent 100%);
+        mask-image: linear-gradient(90deg, #000 0 calc(100% - 36px), transparent 100%);
+      }
+
+      /* 좌우 여백(20px)을 뺀 폭에서 다음 카드가 살짝 보이도록 */
       .event-card {
-        flex: 0 0 82vw;
+        flex: 0 0 calc(100vw - 72px);
         height: auto;
-        min-height: 200px;
+        min-height: 168px;
         padding: 16px;
       }
 
+      /* 모바일 화면 EVENT 카드 타이틀: 최대 200px, 두 줄까지 노출 후 말줄임 */
       .event-card h3 {
-        font-size: 17px;
-        line-height: 24px;
-        width: 100%;
-        max-width: none;
-        margin-bottom: 24px;
+        font-size: 18px;
+        line-height: 26px;
+        width: auto;
+        /* 좁은 화면에서는 우측 날짜 배지를 침범하지 않는 폭까지만 */
+        max-width: min(200px, calc(100% - 76px));
+        padding-right: 0;
+        /* 날짜·장소를 카드 하단으로 밀어냄 */
+        margin-bottom: auto;
+        white-space: normal !important;
+        display: -webkit-box !important;
+        -webkit-box-orient: vertical;
+        -webkit-line-clamp: 2;
+        line-clamp: 2;
+        overflow: hidden !important;
+        text-overflow: ellipsis !important;
       }
 
       .event-card .meta {
         font-size: 13px;
-        line-height: 18px;
+        line-height: 20px;
+      }
+
+      /* 제목과 최소 14px 간격은 유지 */
+      .event-card h3+.meta {
+        margin-top: 14px;
+      }
+
+      .event-card .meta+.meta {
+        margin-top: 6px;
+      }
+
+      .event-progress-track {
+        margin-top: 12px;
       }
 
       .event-badge {
-        width: 80px;
-        height: 80px;
-        top: -36px;
+        width: 76px;
+        height: 76px;
+        top: -34px;
         right: 16px;
       }
 
@@ -2128,33 +2676,59 @@
       }
 
       .quick-grid {
-        grid-template-columns: repeat(2, 1fr);
-        height: auto;
+        height: auto !important;
+        flex-direction: column !important;
       }
 
       .qm-item {
-        height: 140px;
+        height: 90px !important;
+        min-height: 90px !important;
+        max-height: 90px !important;
+        padding: 0 20px;
+        flex: none !important;
       }
 
       .qm-text .k1 {
-        font-size: 12px;
+        font-size: 13px;
       }
 
       .qm-text .k2 {
-        font-size: 15px;
-        line-height: 20px;
+        font-size: 17px;
+        line-height: 22px;
+        margin-top: 2px;
       }
 
+      .qm-arrow {
+        width: 36px;
+        height: 36px;
+        opacity: 1;
+        transform: none;
+        background: rgba(255, 255, 255, 0.25);
+      }
+
+      .qm-arrow svg {
+        width: 18px;
+        height: 18px;
+      }
+
+      /* 세로로 쌓인 카드 사이 간격 축소 (20px → 12px) */
+      .journal-grid {
+        gap: 12px;
+      }
+
+      /* 모바일 화면 Journal 영역 이미지 + 버튼 가로 정렬 대응 */
       .journal-left {
         flex-direction: column;
         align-items: flex-start;
         gap: 16px;
+        width: 100%;
       }
 
       .jl-body {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 16px;
+        flex-direction: row !important;
+        align-items: center !important;
+        justify-content: space-between;
+        gap: 14px;
         width: 100%;
       }
 
@@ -2164,48 +2738,76 @@
       }
 
       .journal-left h3 {
-        font-size: 22px;
-        line-height: 30px;
+        font-size: 24px;
+        line-height: 32px;
+        white-space: normal;
       }
 
       .journal-left .cover {
-        width: 120px;
-        height: 162px;
+        width: 110px !important;
+        height: auto !important;
+        max-height: 150px;
+        object-fit: contain;
       }
 
       .jl-btns {
-        width: 100%;
+        flex: 1 !important;
+        width: auto !important;
+        gap: 10px;
       }
 
       .jbtn,
       .jbtn02 {
-        height: 48px;
-        font-size: 14px;
-        padding: 0 16px;
+        height: 48px !important;
+        font-size: 14px !important;
+        padding: 0 16px !important;
+      }
+
+      .jbtn img,
+      .jbtn02 img {
+        width: 32px !important;
       }
 
       .jcard {
         flex: 1 1 100%;
-        min-height: 220px;
+        min-height: 140px;
+        background-size: cover !important;
+      }
+
+      /* 세로형 사진이라 가로로 넓은 카드에서는 아래쪽 기준으로 잡아야 아이 얼굴이 보임
+         + 얼굴이 크게 보이도록 카드 폭의 125%까지 확대 */
+      .jcard-school {
+        background-size: 125% auto !important;
+        background-position: 50% 75% !important;
       }
 
       .jcard .jtxt {
-        padding: 18px;
-        font-size: 17px;
-        line-height: 24px;
+        padding: 20px;
+        font-size: 18px;
+        line-height: 26px;
       }
 
       .anniv-sec {
-        padding: 30px 0;
+        padding: 36px 0;
         min-height: auto;
       }
 
+      /* 60주년 기념 섹션 모바일 로고 중앙 정렬 및 1열 세로 배치 대응 */
       .anniv-flex {
-        gap: 20px;
+        flex-direction: column !important;
+        align-items: center !important;
+        gap: 24px;
+      }
+
+      .anniv-brand {
+        width: 100% !important;
+        display: flex !important;
+        justify-content: center !important;
       }
 
       .anniv-brand img {
-        width: 220px;
+        width: 185px !important;
+        height: auto !important;
       }
 
       .anniv-links {
@@ -2215,18 +2817,53 @@
       }
 
       .anniv-card {
+        position: relative;
         height: auto;
-        padding: 16px;
+        padding: 18px;
+        justify-content: center;
       }
 
+      /* 🎯 모바일 60주년 바로가기 카드 내부 가로줄 정렬 및 수직 중앙 배치 */
+      .anniv-card .row {
+        align-items: center !important;
+      }
+
+      /* 화살표는 카드 세로 중앙 우측에 고정 */
+      .anniv-card .ic,
+      .anniv-card:hover .ic {
+        position: absolute;
+        top: 50%;
+        right: 14px;
+        width: 32px;
+        height: 32px;
+        transform: translateY(-50%) !important;
+      }
+
+      /* 화살표 영역을 침범하지 않도록 우측 여백 확보 */
+      .anniv-card .row,
+      .anniv-card p {
+        padding-right: 46px;
+      }
+
+      /* 🎯 모바일 화면에서 60주년 바로가기 카드 타이틀 한 줄 표기 및 <br> 무시 설정 */
       .anniv-card .t {
-        font-size: 16px;
-        line-height: 22px;
+        font-size: 18px;
+        line-height: 24px;
+        white-space: nowrap !important;
       }
 
+      .anniv-card .t br,
+      .anniv-card p br {
+        display: none !important;
+      }
+
+      /* 설명글도 한 줄 표기 (넘치면 말줄임) */
       .anniv-card p {
         font-size: 13px;
-        line-height: 18px;
+        line-height: 19px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
       }
 
       .pt-item {
@@ -2234,23 +2871,69 @@
         height: 48px;
       }
 
+      footer {
+        padding: 24px 0;
+      }
+
+      .foot-flex {
+        flex-direction: column;
+        gap: 20px;
+        align-items: stretch;
+      }
+
+      /* 세로 배치에서는 flex-basis(420px)가 '높이'로 해석되어
+         빈 여백이 생기므로 flex 값을 해제 */
+      .foot-brand {
+        flex: none;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 16px;
+        width: 100%;
+      }
+
       .foot-brand img {
-        width: 140px;
+        width: 150px;
         height: auto;
+      }
+
+      .foot-info {
+        flex: none;
+        width: 100%;
+        gap: 10px;
       }
 
       .foot-info p {
         font-size: 13px;
         line-height: 20px;
+        word-break: keep-all;
+      }
+
+      /* 좁은 화면에서는 연락처를 항목별로 한 줄씩 (구분선 숨김) */
+      .foot-info .nowrap {
+        display: block;
+      }
+
+      .foot-info .bar {
+        display: none;
       }
 
       .foot-info .copyright {
         font-size: 11px;
+        line-height: 16px;
+        margin-top: 4px;
+      }
+
+      .foot-actions {
+        width: 100%;
+        justify-content: flex-start;
+        gap: 8px;
+        padding-top: 8px;
+        border-top: 1px solid var(--line);
       }
 
       .foot-btn {
         font-size: 12px;
-        padding: 5px 8px;
+        padding: 6px 12px;
       }
     }
   </style>
@@ -2267,7 +2950,7 @@
     </form>
 
     <a href="index.html" class="logo">
-      <img src="img/logo.png" alt="대한청각학회" width="181" height="54">
+      <img src="img/logo.jpg" alt="대한청각학회">
     </a>
 
     <div class="top-actions">
@@ -2302,15 +2985,15 @@
 
   <dialog class="drawer" id="navDrawer" aria-label="전체메뉴">
     <div class="drawer-head">
-      <span>MENU</span>
+      <span>전체메뉴</span>
       <button class="drawer-close" aria-label="메뉴 닫기">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
           <line x1="5" y1="5" x2="19" y2="19" />
           <line x1="19" y1="5" x2="5" y2="19" />
         </svg>
       </button>
     </div>
-    <ul class="drawer-menu"></ul>
+    <ul class="drawer-menu" id="drawerMenuList"></ul>
   </dialog>
 
   <section class="hero" id="hero">
@@ -2408,7 +3091,7 @@
       <div class="sec-head">
         <div class="sec-head-left">
           <h2>EVENT<span class="dot"></span></h2>
-          <span class="desc">대한청각학회의 행사 정보를 안내해드립니다. 많은 관심과 참여 부탁드립니다.</span>
+          <span class="desc">대한청각학회의 행사 정보를 안내해드립니다. <span class="m-br">많은 관심과 참여 부탁드립니다.</span></span>
         </div>
         <button class="more-btn" aria-label="더보기">
           <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4">
@@ -2542,7 +3225,10 @@
             <div class="k2">신생아 청각선별검사</div>
           </div>
           <div class="qm-arrow">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><line x1="5" y1="12" x2="19" y2="12" /><polyline points="12 5 19 12 12 19" /></svg>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+              <line x1="5" y1="12" x2="19" y2="12" />
+              <polyline points="12 5 19 12 12 19" />
+            </svg>
           </div>
         </a>
         <a class="qm-item" href="#" style="background-color:#dfe6ee;">
@@ -2552,7 +3238,10 @@
             <div class="k2">온라인 교육 사이트</div>
           </div>
           <div class="qm-arrow">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><line x1="5" y1="12" x2="19" y2="12" /><polyline points="12 5 19 12 12 19" /></svg>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+              <line x1="5" y1="12" x2="19" y2="12" />
+              <polyline points="12 5 19 12 12 19" />
+            </svg>
           </div>
         </a>
         <a class="qm-item" href="#" style="background-color:#a9c6cf;">
@@ -2562,7 +3251,10 @@
             <div class="k2">인공와우 이식</div>
           </div>
           <div class="qm-arrow">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><line x1="5" y1="12" x2="19" y2="12" /><polyline points="12 5 19 12 12 19" /></svg>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+              <line x1="5" y1="12" x2="19" y2="12" />
+              <polyline points="12 5 19 12 12 19" />
+            </svg>
           </div>
         </a>
         <a class="qm-item" href="#" style="background-color:#cbb9a8;">
@@ -2572,7 +3264,10 @@
             <div class="k2">청각질환정보</div>
           </div>
           <div class="qm-arrow">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><line x1="5" y1="12" x2="19" y2="12" /><polyline points="12 5 19 12 12 19" /></svg>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+              <line x1="5" y1="12" x2="19" y2="12" />
+              <polyline points="12 5 19 12 12 19" />
+            </svg>
           </div>
         </a>
         <a class="qm-item" href="#" style="background-color:#b9c2cf;">
@@ -2582,7 +3277,10 @@
             <div class="k2">청각질환정보</div>
           </div>
           <div class="qm-arrow">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><line x1="5" y1="12" x2="19" y2="12" /><polyline points="12 5 19 12 12 19" /></svg>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+              <line x1="5" y1="12" x2="19" y2="12" />
+              <polyline points="12 5 19 12 12 19" />
+            </svg>
           </div>
         </a>
       </div>
@@ -2598,26 +3296,21 @@
             <h3>AUDIOLOGY &amp; OTOLOGY</h3>
           </div>
           <div class="jl-body">
-            <img class="cover"
-              src="img/journal-cover.png"
-              alt="Journal of Audiology and Otology 표지">
+            <img class="cover" src="img/journal-cover.png" alt="Journal of Audiology and Otology 표지">
             <div class="jl-btns">
               <a class="jbtn" href="#">Go to Homepage <img src="img/Vector 2.png" alt="" width="48px"></a>
               <a class="jbtn02" href="#">E-Submission <img src="img/Vector 2.png" alt="" width="48px"></a>
             </div>
           </div>
         </div>
-        <a class="jcard" href="#"
-          style="background-image:url('img/journal-webzine.png');">
-          <div class="jtxt">대한청각학회<br>WEBZINE<br>28호</div>
+        <a class="jcard" href="#" style="background-image:url('img/journal-webzine.png');">
+          <div class="jtxt">대한청각학회 WEBZINE 28호</div>
         </a>
-        <a class="jcard" href="#"
-          style="background-image:url('img/journal-avt.jpg');">
-          <div class="jtxt">청각구어치료<br>(AVT)<br>전문가 명단</div>
+        <a class="jcard" href="#" style="background-image:url('img/journal-avt.jpg');">
+          <div class="jtxt">청각구어치료(AVT) 전문가 명단</div>
         </a>
-        <a class="jcard" href="#"
-          style="background-image:url('img/journal-school.png');background-size: 338px;">
-          <div class="jtxt">난청 아동을 위한<br>학교제출용 서식지<br>·<br>교사를 위한<br>보청기와 인공와우<br>안내지</div>
+        <a class="jcard jcard-school" href="#" style="background-image:url('img/journal-school.png');background-size: 338px;">
+          <div class="jtxt">난청 아동 서식지 & 교사용 안내지</div>
         </a>
       </div>
     </div>
@@ -2626,41 +3319,39 @@
   <section class="anniv-sec">
     <div class="wrap anniv-flex">
       <div class="anniv-brand">
-        <img
-          src="img/anniv-brand.png"
-          alt="대한청각학회 60년사">
+        <img src="img/anniv-brand.png" alt="대한청각학회 60년사">
       </div>
       <div class="anniv-links">
         <a class="anniv-card" href="#">
           <div class="row">
-            <span class="t">60년사<br>바로가기</span>
+            <span class="t">60년사 <br>바로가기</span>
             <svg class="ic" width="40" height="40" viewBox="0 0 40 40" fill="none" stroke="#fff" stroke-width="1.5"
-                stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                <line x1="7.9" y1="20" x2="31.2" y2="20" />
-                <polyline points="23.9,12 31.9,20 23.9,28" />
-              </svg>
+              stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <line x1="7.9" y1="20" x2="31.2" y2="20" />
+              <polyline points="23.9,12 31.9,20 23.9,28" />
+            </svg>
           </div>
           <p>대한청각학회의<br>60년 역사를 만나보세요.</p>
         </a>
         <a class="anniv-card" href="#">
           <div class="row">
-            <span class="t">KSA 60th<br>다큐영상</span>
+            <span class="t">KSA 60<sup>th</sup> <br>다큐영상</span>
             <svg class="ic" width="40" height="40" viewBox="0 0 40 40" fill="none" stroke="#fff" stroke-width="1.5"
-                stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                <line x1="7.9" y1="20" x2="31.2" y2="20" />
-                <polyline points="23.9,12 31.9,20 23.9,28" />
-              </svg>
+              stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <line x1="7.9" y1="20" x2="31.2" y2="20" />
+              <polyline points="23.9,12 31.9,20 23.9,28" />
+            </svg>
           </div>
           <p>영상으로 만나는 60년의 기록</p>
         </a>
         <a class="anniv-card" href="#">
           <div class="row">
-            <span class="t">KSA 60th<br>홍보영상</span>
+            <span class="t">KSA 60<sup>th</sup> <br>홍보영상</span>
             <svg class="ic" width="40" height="40" viewBox="0 0 40 40" fill="none" stroke="#fff" stroke-width="1.5"
-                stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                <line x1="7.9" y1="20" x2="31.2" y2="20" />
-                <polyline points="23.9,12 31.9,20 23.9,28" />
-              </svg>
+              stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <line x1="7.9" y1="20" x2="31.2" y2="20" />
+              <polyline points="23.9,12 31.9,20 23.9,28" />
+            </svg>
           </div>
           <p>대한청각학회를 소개합니다</p>
         </a>
@@ -2712,13 +3403,13 @@
   <footer>
     <div class="wrap foot-flex">
       <div class="foot-brand">
-        <img src="img/logo.png" alt="대한청각학회" width="181" height="54">
+        <img src="img/logo.jpg" alt="대한청각학회">
         <div class="foot-info">
           <p>
             대한청각학회<br>
             서울특별시 동작구 보라매로5길 20 1동 2층 이비인후과<br>
-            TEL : 02-3784-8551 &nbsp;&nbsp;|&nbsp;&nbsp; FAX : 0505-115-8551 &nbsp;&nbsp;|&nbsp;&nbsp; E-mail :
-            kaudio2009@naver.com
+            <span class="nowrap">TEL : 02-3784-8551</span><span class="bar">|</span><span class="nowrap">FAX :
+              0505-115-8551</span><span class="bar">|</span><span class="nowrap">E-mail : kaudio2009@naver.com</span>
           </p>
           <p class="copyright">copyright @ 2007 THE KOREAN AUDIOLOGICAL SOCIETY. All rights reserved</p>
         </div>
@@ -2731,10 +3422,11 @@
   </footer>
 
   <script>
-    /* ---------- 1. GNB Mega Dropdown 구축 (sub.html 연결 포함) ---------- */
+    /* ---------- 1. GNB 데이터 정의 ---------- */
     const gnbData = [
       {
-       
+        title: "학회소개",
+        link: "sub.html",
         sub: [
           { name: "인사말", link: "sub.html" },
           { name: "조직/임원", link: "#" },
@@ -2747,7 +3439,8 @@
         ]
       },
       {
-        
+        title: "학술행사",
+        link: "#",
         sub: [
           { name: "학술대회 일정", link: "#" },
           { name: "사전등록 안내", link: "#" },
@@ -2756,7 +3449,8 @@
         ]
       },
       {
-      
+        title: "간행/학회지",
+        link: "#",
         sub: [
           { name: "Journal(JAO)", link: "#" },
           { name: "학회지 검색", link: "#" },
@@ -2764,7 +3458,8 @@
         ]
       },
       {
-      
+        title: "청각기관 F&Q",
+        link: "#",
         sub: [
           { name: "자주 묻는 질문", link: "#" },
           { name: "신생아 청각선별검사", link: "#" },
@@ -2772,7 +3467,8 @@
         ]
       },
       {
-      
+        title: "자료실",
+        link: "#",
         sub: [
           { name: "서식 자료실", link: "#" },
           { name: "교육 자료실", link: "#" },
@@ -2780,14 +3476,16 @@
         ]
       },
       {
-       
+        title: "구인구직 게시판",
+        link: "#",
         sub: [
           { name: "구인 게시판", link: "#" },
           { name: "구직 게시판", link: "#" }
         ]
       },
       {
-        
+        title: "회원공간",
+        link: "#",
         sub: [
           { name: "회원가입 안내", link: "#" },
           { name: "마이페이지", link: "#" },
@@ -2796,10 +3494,31 @@
       }
     ];
 
-    (function initGnbDropdown() {
+    (function initGnb() {
       const navbar = document.querySelector('.navbar');
+      const menuItems = document.querySelectorAll('.nav-menu > li');
       if (!navbar) return;
 
+      // 1. 각 원뎁스 메뉴별 1줄 drop-down 생성
+      menuItems.forEach((li, idx) => {
+        const data = gnbData[idx];
+        if (data && data.sub && data.sub.length > 0) {
+          const subUl = document.createElement('ul');
+          subUl.className = 'sub-dropdown';
+
+          data.sub.forEach(subItem => {
+            const subLi = document.createElement('li');
+            const subA = document.createElement('a');
+            subA.href = subItem.link;
+            subA.textContent = subItem.name;
+            subLi.appendChild(subA);
+            subUl.appendChild(subLi);
+          });
+          li.appendChild(subUl);
+        }
+      });
+
+      // 2. 데스크톱 햄버거 버튼용 메가 드롭다운 생성
       const dropdown = document.createElement('div');
       dropdown.className = 'gnb-dropdown';
       dropdown.id = 'gnbDropdown';
@@ -2810,13 +3529,6 @@
       gnbData.forEach(item => {
         const col = document.createElement('div');
         col.className = 'gnb-depth-col';
-        
-        const h5 = document.createElement('h5');
-        const titleLink = document.createElement('a');
-        titleLink.href = item.link;
-        titleLink.textContent = item.title;
-        h5.appendChild(titleLink);
-        col.appendChild(h5);
 
         const ul = document.createElement('ul');
         item.sub.forEach(subItem => {
@@ -2834,12 +3546,60 @@
       dropdown.appendChild(wrap);
       navbar.appendChild(dropdown);
 
+      // 3. 모바일 사이드 드로어 메뉴 동적 생성 (아코디언 기능)
+      const drawerMenuList = document.getElementById('drawerMenuList');
+      if (drawerMenuList) {
+        gnbData.forEach(item => {
+          const li = document.createElement('li');
+
+          const headDiv = document.createElement('div');
+          headDiv.className = 'drawer-item-head';
+
+          const mainA = document.createElement('a');
+          mainA.href = item.link;
+          mainA.textContent = item.title;
+
+          const toggleBtn = document.createElement('span');
+          toggleBtn.className = 'drawer-toggle-btn';
+          toggleBtn.innerHTML = '▼';
+
+          headDiv.appendChild(mainA);
+          headDiv.appendChild(toggleBtn);
+          li.appendChild(headDiv);
+
+          if (item.sub && item.sub.length > 0) {
+            const subUl = document.createElement('ul');
+            subUl.className = 'drawer-sub-menu';
+
+            item.sub.forEach(subItem => {
+              const subLi = document.createElement('li');
+              const subA = document.createElement('a');
+              subA.href = subItem.link;
+              subA.textContent = subItem.name;
+              subLi.appendChild(subA);
+              subUl.appendChild(subLi);
+            });
+            li.appendChild(subUl);
+
+            headDiv.addEventListener('click', (e) => {
+              if (e.target === toggleBtn || e.target === headDiv) {
+                e.preventDefault();
+                li.classList.toggle('active');
+              }
+            });
+          }
+
+          drawerMenuList.appendChild(li);
+        });
+      }
+
+      // 햄버거 버튼 이벤트 토글
       const navToggle = document.querySelector('.nav-toggle');
       const drawer = document.getElementById('navDrawer');
 
       navToggle.addEventListener('click', (e) => {
         e.stopPropagation();
-        if (window.innerWidth <= 640) {
+        if (window.innerWidth <= 860) {
           if (drawer) drawer.showModal();
         } else {
           dropdown.classList.toggle('open');
@@ -2905,7 +3665,9 @@
         lastTick = ts;
         elapsed += dt;
         const activeDot = dotsWrap.children[current].querySelector('.fill');
-        activeDot.style.width = Math.min(100, (elapsed / DURATION) * 100) + '%';
+        if (activeDot) {
+          activeDot.style.width = Math.min(100, (elapsed / DURATION) * 100) + '%';
+        }
         if (elapsed >= DURATION) {
           goTo(current + 1);
         }
@@ -2926,7 +3688,7 @@
       const originals = [...slider.querySelectorAll('.event-card')];
       const AUTO_MS = 3500;
       const RESUME_MS = 4000;
-      let autoTimer = null, resumeTimer = null;
+      let autoTimer = null, resumeTimer = null, sparkleTimer = null;
 
       originals.forEach(card => {
         const clone = card.cloneNode(true);
@@ -2960,9 +3722,34 @@
         progress.style.width = Math.max(6, pct) + '%';
       }
 
+      /* 슬라이더 좌측에 가장 가까운(=현재 노출 중인) 카드 */
+      function currentCard() {
+        const base = slider.getBoundingClientRect().left;
+        let best = null, bestDist = Infinity;
+        slider.querySelectorAll('.event-card').forEach(card => {
+          const dist = Math.abs(card.getBoundingClientRect().left - base);
+          if (dist < bestDist) { bestDist = dist; best = card; }
+        });
+        return best;
+      }
+
+      /* 날짜 배지 반짝임 */
+      function sparkle() {
+        const card = currentCard();
+        if (!card) return;
+        const badge = card.querySelector('.event-badge');
+        if (!badge) return;
+        badge.classList.remove('flash');
+        void badge.offsetWidth; // 리플로우로 애니메이션 재시작
+        badge.classList.add('flash');
+        badge.addEventListener('animationend', () => badge.classList.remove('flash'), { once: true });
+      }
+
       function advance() {
         normalize();
         slider.scrollBy({ left: step(), behavior: 'smooth' });
+        clearTimeout(sparkleTimer);
+        sparkleTimer = setTimeout(sparkle, 500); // 스크롤이 멈춘 뒤 반짝
       }
 
       function play() {
@@ -2995,7 +3782,10 @@
         nudge();
         slider.classList.add('dragging');
       });
-      window.addEventListener('mouseup', () => { isDown = false; slider.classList.remove('dragging'); });
+      window.addEventListener('mouseup', () => {
+        isDown = false;
+        slider.classList.remove('dragging'); // 스냅이 다시 켜지면서 가까운 카드로 정렬
+      });
       window.addEventListener('mousemove', (e) => {
         if (!isDown) return;
         e.preventDefault();
@@ -3007,7 +3797,7 @@
         if (moved > 5) { e.preventDefault(); e.stopPropagation(); }
       }, true);
 
-      let wheelRun = 0, wheelIdle = null;
+      let wheelRun = 0, wheelIdle = null, wheelLock = false;
       slider.addEventListener('wheel', (e) => {
         const horizontal = Math.abs(e.deltaX) > Math.abs(e.deltaY);
         const d = horizontal ? e.deltaX : e.deltaY;
@@ -3020,7 +3810,12 @@
         }
         e.preventDefault();
         nudge();
-        slider.scrollLeft += d;
+        // 휠 한 번에 카드 한 칸씩 부드럽게 이동 (연속 입력은 잠금으로 흡수)
+        if (wheelLock) return;
+        wheelLock = true;
+        setTimeout(() => { wheelLock = false; }, 420);
+        normalize();
+        slider.scrollBy({ left: d > 0 ? step() : -step(), behavior: 'smooth' });
       }, { passive: false });
 
       slider.addEventListener('mouseenter', pause);
@@ -3050,21 +3845,19 @@
       }));
     })();
 
-    /* ---------- Mobile drawer (sub.html 복사 링크 반영) ---------- */
+    /* ---------- Mobile drawer Close ---------- */
     (function () {
       const dlg = document.getElementById('navDrawer');
-      const list = dlg.querySelector('.drawer-menu');
-      document.querySelectorAll('.nav-menu > li').forEach(li => list.appendChild(li.cloneNode(true)));
-
+      if (!dlg) return;
       dlg.querySelector('.drawer-close').addEventListener('click', () => dlg.close());
       dlg.addEventListener('click', e => { if (e.target === dlg) dlg.close(); });
-      list.addEventListener('click', e => { if (e.target.closest('a')) dlg.close(); });
     })();
 
-    /* ---------- Partner banner slider (무한 롤링) ---------- */
+    /* ---------- Partner banner slider ---------- */
     (function () {
       const track = document.getElementById('ptTrack');
-      
+      if (!track) return;
+
       const items = [...track.children];
       items.forEach(item => {
         const clone = item.cloneNode(true);
@@ -3076,6 +3869,9 @@
 
       track.addEventListener('mouseenter', () => isPaused = true);
       track.addEventListener('mouseleave', () => isPaused = false);
+      // 터치로 직접 넘기는 동안에는 자동 롤링 정지
+      track.addEventListener('touchstart', () => isPaused = true, { passive: true });
+      track.addEventListener('touchend', () => isPaused = false, { passive: true });
 
       function roll() {
         if (!isPaused) {
@@ -3087,16 +3883,14 @@
         }
         requestAnimationFrame(roll);
       }
-      
+
       requestAnimationFrame(roll);
 
       const step = () => track.clientWidth * 0.5;
-      document.getElementById('ptPrev').addEventListener('click', () => {
-        track.scrollLeft -= step();
-      });
-      document.getElementById('ptNext').addEventListener('click', () => {
-        track.scrollLeft += step();
-      });
+      const prev = document.getElementById('ptPrev');
+      const next = document.getElementById('ptNext');
+      if (prev) prev.addEventListener('click', () => { track.scrollLeft -= step(); });
+      if (next) next.addEventListener('click', () => { track.scrollLeft += step(); });
     })();
   </script>
 </body>

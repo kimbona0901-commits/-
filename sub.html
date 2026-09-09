@@ -50,6 +50,32 @@
       box-sizing: border-box;
     }
 
+    /* 전역 스크롤바 숨김 처리 (기능은 유지) */
+    html,
+    body,
+    div,
+    section,
+    ul,
+    dialog {
+      -ms-overflow-style: none;
+      /* IE and Edge */
+      scrollbar-width: none;
+      /* Firefox */
+    }
+
+    html::-webkit-scrollbar,
+    body::-webkit-scrollbar,
+    div::-webkit-scrollbar,
+    section::-webkit-scrollbar,
+    ul::-webkit-scrollbar,
+    dialog::-webkit-scrollbar,
+    *::-webkit-scrollbar {
+      display: none !important;
+      /* Chrome, Safari, Opera */
+      width: 0 !important;
+      height: 0 !important;
+    }
+
     body {
       font-family: 'Paperozi', 'Noto Sans KR', sans-serif;
       color: var(--ink);
@@ -110,10 +136,16 @@
       border-radius: 500px;
       padding: 8px 20px;
       transition: border-color .2s, box-shadow .2s;
+      width: 260px;
     }
 
     .search-box:hover {
       border-color: #bbb;
+    }
+
+    .search-box:focus-within {
+      border-color: #45a2ff;
+      box-shadow: 0 0 0 3px rgba(69, 162, 255, .15);
     }
 
     .search-box input {
@@ -122,7 +154,32 @@
       flex: 1;
       min-width: 0;
       font-size: 15px;
+      line-height: 22px;
+      font-family: inherit;
       background: transparent;
+    }
+
+    .search-box input::placeholder {
+      color: #999;
+    }
+
+    .search-box button {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 20px;
+      height: 20px;
+      flex-shrink: 0;
+      transition: transform .2s, opacity .2s;
+    }
+
+    .search-box button:hover {
+      transform: scale(1.12);
+    }
+
+    .search-box button img {
+      width: 20px;
+      height: 20px;
     }
 
     .logo {
@@ -139,10 +196,12 @@
       opacity: .75;
     }
 
+    /* 로고: 폭/높이를 고정하지 않고 원본 비율 그대로 표시 (최대 높이만 제한) */
     .logo img {
-      width: 181px;
-      height: 54px;
-      object-fit: contain;
+      width: auto;
+      height: auto;
+      max-height: 72px;
+      max-width: 100%;
     }
 
     .top-actions {
@@ -162,6 +221,7 @@
       border-radius: 500px;
       padding: 8px 20px;
       font-size: 15px;
+      line-height: 22px;
       font-weight: 600;
       white-space: nowrap;
       transition: background .2s, transform .2s;
@@ -176,6 +236,15 @@
       transform: translateY(-2px);
     }
 
+    .login-join.join:hover {
+      background: #4f5e73;
+    }
+
+    .login-join img {
+      width: 20px;
+      height: 20px;
+    }
+
     .pill {
       display: flex;
       align-items: center;
@@ -183,6 +252,7 @@
       padding: 8px 20px;
       border-radius: 500px;
       font-size: 15px;
+      line-height: 22px;
       font-weight: 600;
       background: #45a2ff;
       color: #fff;
@@ -198,7 +268,14 @@
       display: flex;
       width: 44px;
       height: 44px;
+      flex-shrink: 0;
       transition: transform .25s, filter .25s;
+    }
+
+    .sns img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
     }
 
     .sns:hover {
@@ -223,16 +300,19 @@
     .nav-menu {
       display: flex;
       flex: 1;
+      min-width: 0;
       align-items: stretch;
     }
 
-    .nav-menu li {
+    .nav-menu>li {
+      position: relative;
       display: flex;
       flex: 1;
+      min-width: 0;
       align-items: stretch;
     }
 
-    .nav-menu a {
+    .nav-menu>li>a {
       display: flex;
       align-items: center;
       justify-content: center;
@@ -240,15 +320,58 @@
       height: 64px;
       padding: 0 8px;
       font-size: 17px;
+      line-height: 26px;
       font-weight: 600;
       color: #fff;
       white-space: nowrap;
       transition: background .25s;
     }
 
-    .nav-menu li.active a,
-    .nav-menu a:hover {
+    .nav-menu li.active>a,
+    .nav-menu>li:hover>a {
       background: var(--blue-hover);
+    }
+
+    .nav-menu .sub-dropdown {
+      position: absolute;
+      top: 100%;
+      left: 0;
+      width: 100%;
+      background: #ffffff;
+      border-top: 3px solid #00468e;
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.12);
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(10px);
+      transition: all 0.25s ease;
+      z-index: 50;
+      padding: 8px 0;
+      border-radius: 0 0 8px 8px;
+      text-align: center;
+    }
+
+    .nav-menu>li:hover .sub-dropdown {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0);
+    }
+
+    /* 2뎁스는 1뎁스(17px)보다 한 단계 작게 */
+    .nav-menu .sub-dropdown li a {
+      display: block;
+      padding: 9px 8px;
+      font-size: 15px;
+      line-height: 22px;
+      font-weight: 500;
+      color: #333;
+      word-break: keep-all;
+      transition: background 0.2s, color 0.2s;
+    }
+
+    .nav-menu .sub-dropdown li a:hover {
+      background: #eaf1fc;
+      color: #00468e;
+      font-weight: 600;
     }
 
     .nav-toggle {
@@ -256,12 +379,206 @@
       align-items: center;
       justify-content: center;
       width: 64px;
+      flex-shrink: 0;
       background: #053669;
       transition: background .2s;
     }
 
     .nav-toggle:hover {
       background: #0a4a8c;
+    }
+
+    .nav-toggle img {
+      width: 40px;
+      height: 40px;
+    }
+
+    /* ===== 📋 GNB MEGA DROPDOWN ===== */
+    .gnb-dropdown {
+      position: absolute;
+      top: 100%;
+      left: 0;
+      right: 0;
+      background: #f8f9fa;
+      border-bottom: 2px solid #00468e;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.35s ease-in-out, opacity 0.3s;
+      opacity: 0;
+      z-index: 39;
+    }
+
+    .gnb-dropdown.open {
+      max-height: 420px;
+      opacity: 1;
+    }
+
+    /* 우측 96px = .wrap 좌우여백 32px + .nav-toggle 폭 64px
+       → 2뎁스 칼럼 영역이 1뎁스 메뉴 영역과 정확히 일치 */
+    .gnb-dropdown .wrap {
+      display: flex;
+      align-items: flex-start;
+      padding: 24px 96px 24px 32px;
+    }
+
+    .gnb-depth-col {
+      flex: 1;
+      min-width: 0;
+      border-right: 1px solid #e9ecef;
+      padding: 0 8px;
+      text-align: center;
+    }
+
+    .gnb-depth-col:last-child {
+      border-right: none;
+    }
+
+    .gnb-depth-col ul li {
+      margin-bottom: 10px;
+    }
+
+    .gnb-depth-col ul li:last-child {
+      margin-bottom: 0;
+    }
+
+    /* 2뎁스는 1뎁스(17px)보다 한 단계 작게 */
+    .gnb-depth-col ul li a {
+      font-size: 15px;
+      line-height: 22px;
+      font-weight: 500;
+      color: #495057;
+      word-break: keep-all;
+      transition: color 0.2s, font-weight 0.2s;
+      display: block;
+    }
+
+    .gnb-depth-col ul li a:hover {
+      color: #0080ff;
+      font-weight: 700;
+    }
+
+    /* ===== DRAWER (모바일 사이드 슬라이드 메뉴) ===== */
+    .drawer {
+      margin: 0 0 0 auto;
+      width: min(320px, 85vw);
+      max-width: none;
+      height: 100%;
+      max-height: 100%;
+      padding: 0;
+      border: 0;
+      background: #173a72;
+      color: #fff;
+      transform: translateX(100%);
+      transition: transform .28s ease, overlay .28s allow-discrete, display .28s allow-discrete;
+      overflow-y: auto;
+    }
+
+    .drawer[open] {
+      transform: translateX(0);
+    }
+
+    @starting-style {
+      .drawer[open] {
+        transform: translateX(100%);
+      }
+    }
+
+    .drawer::backdrop {
+      background: rgba(6, 14, 32, .6);
+    }
+
+    .drawer-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 18px 20px;
+      border-bottom: 1px solid rgba(255, 255, 255, .12);
+    }
+
+    .drawer-head span {
+      font-family: 'Paperozi', sans-serif;
+      font-weight: 700;
+      font-size: 18px;
+      letter-spacing: .5px;
+    }
+
+    .drawer-close {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      color: #c3d3ec;
+      background: rgba(255, 255, 255, .08);
+      transition: color .2s, background .2s;
+    }
+
+    .drawer-close:hover {
+      color: #fff;
+      background: rgba(255, 255, 255, .18);
+    }
+
+    .drawer-menu {
+      display: block;
+      padding: 12px 0;
+    }
+
+    .drawer-menu>li {
+      display: block;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .drawer-menu .drawer-item-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 16px 20px;
+      cursor: pointer;
+    }
+
+    .drawer-menu .drawer-item-head a {
+      font-size: 17px;
+      font-weight: 700;
+      color: #fff;
+    }
+
+    .drawer-menu .drawer-toggle-btn {
+      color: #9aa3af;
+      font-size: 14px;
+      transition: transform 0.25s;
+    }
+
+    .drawer-menu>li.active .drawer-toggle-btn {
+      transform: rotate(180deg);
+      color: #fff;
+    }
+
+    .drawer-sub-menu {
+      max-height: 0;
+      overflow: hidden;
+      background: rgba(0, 0, 0, 0.2);
+      transition: max-height 0.3s ease, padding 0.3s ease;
+      padding: 0 20px;
+    }
+
+    .drawer-menu>li.active .drawer-sub-menu {
+      max-height: 500px;
+      padding: 10px 20px 16px 20px;
+    }
+
+    .drawer-sub-menu li a {
+      display: block;
+      padding: 8px 0;
+      font-size: 15px;
+      color: #c3d3ec;
+      transition: color 0.2s;
+    }
+
+    .drawer-sub-menu li a:hover {
+      color: #ffffff;
+      font-weight: 600;
     }
 
     /* ===== SUB HERO BANNER & BREADCRUMB ===== */
@@ -425,7 +742,7 @@
       position: relative;
       flex-shrink: 0;
       width: 240px;
-      overflow: hidden;      
+      overflow: hidden;
     }
 
     .profile-card img {
@@ -497,33 +814,57 @@
       display: flex;
       align-items: flex-start;
       gap: 40px;
-      flex-shrink: 0;
+      flex: 1 1 420px;
+      min-width: 0;
     }
 
     .foot-brand img {
-      width: 181px;
-      height: 54px;
-      object-fit: contain;
+      width: 220px;
+      max-width: 100%;
+      height: auto;
       mix-blend-mode: multiply;
+      flex-shrink: 0;
+    }
+
+    .foot-info {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      flex: 1;
+      min-width: 0;
     }
 
     .foot-info p {
       font-size: 15px;
+      font-weight: 400;
       line-height: 24px;
       color: #676767;
+      word-break: keep-all;
+      overflow-wrap: anywhere;
+    }
+
+    .foot-info .bar {
+      display: inline-block;
+      margin: 0 10px;
+      color: #c8c8c8;
+    }
+
+    .foot-info .nowrap {
+      white-space: nowrap;
     }
 
     .foot-info .copyright {
       font-size: 13px;
       line-height: 20px;
       color: #999;
-      margin-top: 14px;
     }
 
     .foot-actions {
       display: flex;
       align-items: center;
       gap: 8px;
+      flex-wrap: wrap;
+      flex-shrink: 0;
     }
 
     .foot-btn {
@@ -531,14 +872,29 @@
       border-radius: 4px;
       background: #676767;
       font-size: 14px;
+      line-height: 20px;
+      font-weight: 200;
       color: #fff;
+      white-space: nowrap;
+      transition: background .2s;
     }
 
     .foot-btn.strong {
       background: #333;
+      font-weight: 400;
+    }
+
+    .foot-btn:hover {
+      background: #111;
     }
 
     /* ===== 📱 RESPONSIVE MEDIA QUERIES ===== */
+    @media (max-width: 1280px) {
+      .logo img {
+        max-height: 62px;
+      }
+    }
+
     @media (max-width: 1024px) {
       .greeting-grid {
         flex-direction: column;
@@ -560,15 +916,12 @@
       }
     }
 
-    @media (max-width: 640px) {
-      .wrap {
-        padding: 0 16px;
-      }
-
+    @media (max-width: 1000px) {
       .topbar {
         height: auto;
-        padding: 16px;
-        flex-direction: column;
+        padding: 16px 20px;
+        flex-wrap: wrap;
+        justify-content: space-between;
         gap: 12px;
       }
 
@@ -579,22 +932,108 @@
       }
 
       .logo img {
-        width: 135px;
+        max-height: 60px;
       }
 
       .search-box {
+        order: 2;
         width: 100%;
-        height: 40px;
       }
 
-      .login-join,
       .top-actions {
-        display: none !important;
+        order: 0;
+        margin-left: auto;
+      }
+    }
+
+    @media (max-width: 860px) {
+      .nav-menu {
+        display: none;
+      }
+    }
+
+    @media (max-width: 760px) {
+      .logo img {
+        max-height: 36px;
+      }
+    }
+
+    @media (max-width: 640px) {
+
+      /* 모바일 화면 호버 인터랙션 무효화 (터치시 흔들림/튀는 현상 제거) */
+      .login-join:hover,
+      .pill:hover,
+      .sns:hover {
+        transform: none !important;
+        filter: none !important;
+        box-shadow: none !important;
+      }
+
+      /* 모바일 컨텐츠 좌우 여백 20px 지정 */
+      .wrap {
+        padding: 0 20px !important;
+      }
+
+      .topbar {
+        height: auto;
+        padding: 14px 20px !important;
+        flex-direction: row;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
       }
 
       .navbar .wrap {
-        padding: 0 16px;
-        justify-content: flex-end;
+        padding: 0 20px !important;
+        justify-content: space-between;
+        align-items: center;
+        height: 52px;
+      }
+
+      .logo {
+        position: static;
+        transform: none;
+        order: 0;
+        margin-bottom: 0;
+      }
+
+      .logo img {
+        max-height: 36px;
+      }
+
+      .top-actions {
+        display: flex !important;
+        order: 1;
+        gap: 6px;
+      }
+
+      .login-join {
+        height: 36px;
+        padding: 4px 12px;
+        font-size: 12px;
+      }
+
+      .login-join img {
+        width: 14px;
+        height: 14px;
+      }
+
+      .pill,
+      .sns {
+        display: none !important;
+      }
+
+      .search-box {
+        order: 2;
+        width: 100%;
+        height: 40px;
+        gap: 12px;
+        padding: 6px 16px;
+      }
+
+      .search-box input {
+        font-size: 13px;
       }
 
       .nav-menu {
@@ -603,6 +1042,15 @@
 
       .nav-toggle {
         margin-left: auto;
+        width: 44px;
+        height: 44px;
+        border-radius: 8px;
+        background: transparent;
+      }
+
+      .nav-toggle img {
+        width: 32px;
+        height: 32px;
       }
 
       .sub-hero {
@@ -613,18 +1061,43 @@
         font-size: 26px;
       }
 
+      /* overflow-x: auto 를 쓰면 아래로 펼쳐지는 드롭다운이 잘려서 안 보인다.
+         가로 스크롤 대신 항목을 화면 폭에 맞춰 나눠 갖도록 변경 */
       .sub-nav-bar {
-        overflow-x: auto;
+        overflow-x: visible;
+      }
+
+      .lnb-home {
+        width: 48px;
+        flex-shrink: 0;
       }
 
       .lnb-select-wrap {
-        min-width: 140px;
+        flex: 1;
+        min-width: 0;
+        gap: 8px;
         padding: 0 12px;
         font-size: 13px;
       }
 
+      /* 메뉴명이 길어지면 말줄임 (화살표는 항상 노출) */
+      .lnb-select-wrap>span {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+
+      .lnb-select-wrap>svg {
+        flex-shrink: 0;
+      }
+
       .sub-content-sec {
         padding: 40px 0 80px;
+      }
+
+      /* 모바일에서는 회장 사진을 절반 크기로 */
+      .profile-card {
+        width: 140px;
       }
 
       .greeting-header h2 {
@@ -650,9 +1123,69 @@
         font-size: 18px;
       }
 
-      .foot-brand {
+      footer {
+        padding: 24px 0;
+      }
+
+      .foot-flex {
         flex-direction: column;
+        gap: 20px;
+        align-items: stretch;
+      }
+
+      /* 세로 배치에서는 flex-basis(420px)가 '높이'로 해석되어
+         빈 여백이 생기므로 flex 값을 해제 */
+      .foot-brand {
+        flex: none;
+        flex-direction: column;
+        align-items: flex-start;
         gap: 16px;
+        width: 100%;
+      }
+
+      .foot-brand img {
+        width: 150px;
+        height: auto;
+      }
+
+      .foot-info {
+        flex: none;
+        width: 100%;
+        gap: 10px;
+      }
+
+      .foot-info p {
+        font-size: 13px;
+        line-height: 20px;
+        word-break: keep-all;
+      }
+
+      /* 좁은 화면에서는 연락처를 항목별로 한 줄씩 (구분선 숨김) */
+      .foot-info .nowrap {
+        display: block;
+      }
+
+      .foot-info .bar {
+        display: none;
+      }
+
+      .foot-info .copyright {
+        font-size: 11px;
+        line-height: 16px;
+        margin-top: 4px;
+      }
+
+      .foot-actions {
+        width: 100%;
+        justify-content: flex-start;
+        gap: 8px;
+        padding-top: 8px;
+        border-top: 1px solid var(--line);
+      }
+
+      .foot-btn {
+        font-size: 12px;
+        padding: 6px 12px;
       }
     }
   </style>
@@ -669,7 +1202,7 @@
     </form>
 
     <a href="index.html" class="logo">
-      <img src="img/logo.png" alt="대한청각학회" width="181" height="54">
+      <img src="img/logo.jpg" alt="대한청각학회">
     </a>
 
     <div class="top-actions">
@@ -701,6 +1234,19 @@
       </button>
     </div>
   </nav>
+
+  <dialog class="drawer" id="navDrawer" aria-label="전체메뉴">
+    <div class="drawer-head">
+      <span>전체메뉴</span>
+      <button class="drawer-close" aria-label="메뉴 닫기">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <line x1="5" y1="5" x2="19" y2="19" />
+          <line x1="19" y1="5" x2="5" y2="19" />
+        </svg>
+      </button>
+    </div>
+    <ul class="drawer-menu" id="drawerMenuList"></ul>
+  </dialog>
 
   <section class="sub-hero">
     <div class="wrap">
@@ -788,12 +1334,13 @@
   <footer>
     <div class="wrap foot-flex">
       <div class="foot-brand">
-        <img src="img/logo.png" alt="대한청각학회" width="181" height="54">
+        <img src="img/logo.jpg" alt="대한청각학회">
         <div class="foot-info">
           <p>
             대한청각학회<br>
             서울특별시 동작구 보라매로5길 20 1동 2층 이비인후과<br>
-            TEL : 02-3784-8551 &nbsp;&nbsp;|&nbsp;&nbsp; FAX : 0505-115-8551 &nbsp;&nbsp;|&nbsp;&nbsp; E-mail : kaudio2009@naver.com
+            <span class="nowrap">TEL : 02-3784-8551</span><span class="bar">|</span><span class="nowrap">FAX :
+              0505-115-8551</span><span class="bar">|</span><span class="nowrap">E-mail : kaudio2009@naver.com</span>
           </p>
           <p class="copyright">copyright @ 2007 THE KOREAN AUDIOLOGICAL SOCIETY. All rights reserved</p>
         </div>
@@ -806,6 +1353,205 @@
   </footer>
 
   <script>
+    /* ---------- 1. GNB 데이터 정의 (메인페이지와 동일) ---------- */
+    const gnbData = [
+      {
+        title: "학회소개",
+        link: "sub.html",
+        sub: [
+          { name: "인사말", link: "sub.html" },
+          { name: "조직/임원", link: "#" },
+          { name: "연혁", link: "#" },
+          { name: "미션과비전", link: "#" },
+          { name: "회칙", link: "#" },
+          { name: "사무국 안내", link: "#" },
+          { name: "학회 공지/소식", link: "#" },
+          { name: "관련사이트", link: "#" }
+        ]
+      },
+      {
+        title: "학술행사",
+        link: "#",
+        sub: [
+          { name: "학술대회 일정", link: "#" },
+          { name: "사전등록 안내", link: "#" },
+          { name: "지난 학술대회", link: "#" },
+          { name: "연수강좌", link: "#" }
+        ]
+      },
+      {
+        title: "간행/학회지",
+        link: "#",
+        sub: [
+          { name: "Journal(JAO)", link: "#" },
+          { name: "학회지 검색", link: "#" },
+          { name: "논문 투고 안내", link: "#" }
+        ]
+      },
+      {
+        title: "청각기관 F&Q",
+        link: "#",
+        sub: [
+          { name: "자주 묻는 질문", link: "#" },
+          { name: "신생아 청각선별검사", link: "#" },
+          { name: "인공와우 정보", link: "#" }
+        ]
+      },
+      {
+        title: "자료실",
+        link: "#",
+        sub: [
+          { name: "서식 자료실", link: "#" },
+          { name: "교육 자료실", link: "#" },
+          { name: "홍보자료", link: "#" }
+        ]
+      },
+      {
+        title: "구인구직 게시판",
+        link: "#",
+        sub: [
+          { name: "구인 게시판", link: "#" },
+          { name: "구직 게시판", link: "#" }
+        ]
+      },
+      {
+        title: "회원공간",
+        link: "#",
+        sub: [
+          { name: "회원가입 안내", link: "#" },
+          { name: "마이페이지", link: "#" },
+          { name: "회비 납부", link: "#" }
+        ]
+      }
+    ];
+
+    (function initGnb() {
+      const navbar = document.querySelector('.navbar');
+      const menuItems = document.querySelectorAll('.nav-menu > li');
+      if (!navbar) return;
+
+      // 1. 각 원뎁스 메뉴별 1줄 drop-down 생성
+      menuItems.forEach((li, idx) => {
+        const data = gnbData[idx];
+        if (data && data.sub && data.sub.length > 0) {
+          const subUl = document.createElement('ul');
+          subUl.className = 'sub-dropdown';
+
+          data.sub.forEach(subItem => {
+            const subLi = document.createElement('li');
+            const subA = document.createElement('a');
+            subA.href = subItem.link;
+            subA.textContent = subItem.name;
+            subLi.appendChild(subA);
+            subUl.appendChild(subLi);
+          });
+          li.appendChild(subUl);
+        }
+      });
+
+      // 2. 데스크톱 햄버거 버튼용 메가 드롭다운 생성
+      const dropdown = document.createElement('div');
+      dropdown.className = 'gnb-dropdown';
+      dropdown.id = 'gnbDropdown';
+
+      const wrap = document.createElement('div');
+      wrap.className = 'wrap';
+
+      gnbData.forEach(item => {
+        const col = document.createElement('div');
+        col.className = 'gnb-depth-col';
+
+        const ul = document.createElement('ul');
+        item.sub.forEach(subItem => {
+          const li = document.createElement('li');
+          const a = document.createElement('a');
+          a.href = subItem.link;
+          a.textContent = subItem.name;
+          li.appendChild(a);
+          ul.appendChild(li);
+        });
+        col.appendChild(ul);
+        wrap.appendChild(col);
+      });
+
+      dropdown.appendChild(wrap);
+      navbar.appendChild(dropdown);
+
+      // 3. 모바일 사이드 드로어 메뉴 동적 생성 (아코디언 기능)
+      const drawerMenuList = document.getElementById('drawerMenuList');
+      if (drawerMenuList) {
+        gnbData.forEach(item => {
+          const li = document.createElement('li');
+
+          const headDiv = document.createElement('div');
+          headDiv.className = 'drawer-item-head';
+
+          const mainA = document.createElement('a');
+          mainA.href = item.link;
+          mainA.textContent = item.title;
+
+          const toggleBtn = document.createElement('span');
+          toggleBtn.className = 'drawer-toggle-btn';
+          toggleBtn.innerHTML = '▼';
+
+          headDiv.appendChild(mainA);
+          headDiv.appendChild(toggleBtn);
+          li.appendChild(headDiv);
+
+          if (item.sub && item.sub.length > 0) {
+            const subUl = document.createElement('ul');
+            subUl.className = 'drawer-sub-menu';
+
+            item.sub.forEach(subItem => {
+              const subLi = document.createElement('li');
+              const subA = document.createElement('a');
+              subA.href = subItem.link;
+              subA.textContent = subItem.name;
+              subLi.appendChild(subA);
+              subUl.appendChild(subLi);
+            });
+            li.appendChild(subUl);
+
+            headDiv.addEventListener('click', (e) => {
+              if (e.target === toggleBtn || e.target === headDiv) {
+                e.preventDefault();
+                li.classList.toggle('active');
+              }
+            });
+          }
+
+          drawerMenuList.appendChild(li);
+        });
+      }
+
+      // 햄버거 버튼 이벤트 토글
+      const navToggle = document.querySelector('.nav-toggle');
+      const drawer = document.getElementById('navDrawer');
+
+      navToggle.addEventListener('click', (e) => {
+        e.stopPropagation();
+        if (window.innerWidth <= 860) {
+          if (drawer) drawer.showModal();
+        } else {
+          dropdown.classList.toggle('open');
+        }
+      });
+
+      document.addEventListener('click', (e) => {
+        if (!navbar.contains(e.target)) {
+          dropdown.classList.remove('open');
+        }
+      });
+    })();
+
+    /* ---------- 모바일 드로어 닫기 ---------- */
+    (function () {
+      const dlg = document.getElementById('navDrawer');
+      if (!dlg) return;
+      dlg.querySelector('.drawer-close').addEventListener('click', () => dlg.close());
+      dlg.addEventListener('click', e => { if (e.target === dlg) dlg.close(); });
+    })();
+
     /* LNB 드롭다운 토글 제어 함수 */
     function toggleLnb(element) {
       const allSelects = document.querySelectorAll('.lnb-select-wrap');
